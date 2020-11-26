@@ -1,0 +1,94 @@
+\documentclass{article}
+
+\usepackage{url,html}
+\usepackage{amssymb}
+\usepackage[longnamesfirst,numbers,sort&compress]{natbib}
+\usepackage{cleveref}
+\usepackage{paralist}
+
+
+\newcommand{\R}{\mathbb{R}}
+
+\title{Sparse Induced-Universal Graphs for Planarity}
+\author{TBD}
+
+\begin{document}
+
+Very recently, \citet{dujmovic.esperet.ea:adjacency} described a $(1+o(1))\log n$-bit adjacency labelling scheme for planar graphs.  This means that there is a single function $A:\{0,1\}^*\to\{0,1\}$ such that, for any $n$ vertex planar graph $G$ there is a labelling $\ell:V(G)\to\{0,1\}^{(1+o(1))\log n}$ for which $A(\ell(v),\ell(w))=1$ if and only if $vw\in E(G)$.
+
+This result has the following immediate consequence: For every positive integer $n$, there exists a graph $I_n$ having $n^{1+o(1)}$ \emph{vertices} such that, for every $n$-vertex planar graph $G$, $I_n$ contains an induced subgraph isomorphic to $G$.  To see this, let $I_n$ be the graph with vertex set $V(I_n):=\{0,1\}^{(1+o(1))\log n}$ and for which $xy\in E(I_n)$ if and only $A(x,y)=1$.  Then, for any $n$-vertex planar graph $G$ with labelling $\ell$, the induced subgraph $I_n[\{\ell(v):v\in V(G)\}]$ is isomorphic to $V(G)$.
+The graph $I_n$ is called an \emph{induced-universal graph} for the class of $n$-vertex planar graphs.
+
+Using one of the main ideas from \cite{dujmovic.esperet.ea:adjacency}, \citet{esperet.joret.ea:sparse} showed that there exists a graph $S_n$ with $n^{1+o(1)}$ \emph{edges} such that, for every $n$-vertex planar graph $G$, $S_n$ contains a subgraph (not necessarily induced) isomorphic to $G$.  The graph $S_n$ is called a \emph{subgraph-universal graph} for the class of $n$-vertex planar graphs.
+
+Notice the contrasts between these two results: $I_n$ contains every $n$-vertex planar graph $G$ as an \emph{induced} subgraph whereas $S_n$ may only contain $G$ as a subgraph.  On the other hand, the graph $S_n$ is sparse, having only $n^{1+o(1)}$ edges whereas $I_n$ has $n^{1+o(1)}$ vertices and may have have $n^{2+o(1)}$ edges.
+
+In this paper we show that, for every positive integer $n$, there exist a sparse induced universal graph $U_n$ for the class of $n$-vertex planar graphs.  More precisely, $U_n$ has $n^{1+o(1)}$ edges and vertices and, for every $n$-vertex planar graph $G$, $U_n$ contains an induced subgraph isomorphic to $G$.
+
+
+\section{Review of Adjacency Labelling}
+
+We now summarize the most relevant aspects of the adjacency labelling scheme of \citet{dujmovic.esperet.ea:adjacency}.  The scheme works for any $n$-vertex $G$ that such that there exists some treewidth at most $t$ graph $H$ and some path $P$ such that $G$ is a subgraph of $H\boxtimes P$. Without loss of generality, we may assume that the vertices of $P$ are the integers $1,\ldots,h$ in the order they occur on the path $P$ and that, for each $y\in\{1,\ldots,h\}$ there exists at least one $v\in V(H)$ such that $(v,y)\in V(G)$.
+
+Without loss of generality, we may assume that $H$ is an edge-maximal graph of treewidth $t$ and has at least $t+1$ vertices.  Fix a tree decomposition $(B_x:x\in V(T))$ of $H$ in which each bag has size exactly $t+1$ and in which no two bags have the came contents.  Root $T$ at an arbitrary node $r$ and, for each vertex $v$ of $H$, let $C_v:=B_x$ where $x$ is the minimum-depth node of $T$ such that $v\in B_x$.  The vertex set $C_v$ has size $t+1$, includes $v$ and is called the \emph{family clique} of $v$.
+
+Fix a proper colouring $\varphi:H\to\{1,\ldots,t+1\}$.  For any vertex $v$ of $H$, the \emph{$i$-parent} $p_i(v)$ of $v$ is the unique node $w\in C_v$ with $\varphi(w)=i$.  Note that $v$ is the $\varphi(v)$-parent of itself.
+
+The scheme works as follows. Each vertex $v$ of $H$ is mapped to a real interval $[a_v,b_v]$ in such a way that $vw\in E(H)$ implies that $[a_v,b_v]\cap [a_w,b_w]\neq\emptyset$.  This mapping is also thin, in the following sense:
+
+\begin{compactenum}[(P1)]
+    \item for any $x\in \R$, $|\{v\in V(H): x\in[a_v,b_w]\}|\in O(t\log n)$.\label{thin}
+\end{compactenum}
+
+For each $y\in\{0,\ldots,n+1\}$, let $L_y:=\{v\in V(H): (v,y)\in V(G)\}$ and let $S_y:=\bigcup_{v\in L_y}C_v$.  The labelling scheme first finds sets $S^+_1,\ldots,S^+_h$ of total size $O(n)$ such that $S^+_y\supseteq S_{y-1}\cup S_y\cup S_{y+1}$.\footnote{The original labelling scheme only uses $S^+_y\supseteq S_{y-1}\cup S_y$ but it is convenient for us to include $S_{y+1}$ as well and this change does not invalidate anything in the original scheme.}
+
+Now the scheme defines a sequence of binary search trees $T_1,\ldots,T_h$ such that, for each $y\in\{1,\ldots,h\}$ and each $v\in S^+_y$, $T_y$ contains at least one $x\in [a_v,b_v]$.  This leads to the following crucial definition: $x_{y}(v)$ is the minimum-depth node $x$ of $T_y$ such that $x\in [a_v,b_v]$. Note that $x_y(v)$ is well-defined since $T_y$ contains at least one node $x\in[a_v,b_v]$.   The following property follows from these definitions and Helly's Theorem:
+
+\begin{compactenum}[(P2)]
+    \item For any $v\in L_y$, there exists a single path $P_y(v)$ that begins at the root of $T_y$ and contains every node in $\{x_{T_y}(w): w\in C_v\}$.\label{clique-path}
+\end{compactenum}
+
+The trees $T_1,\ldots,T_h$ are very well-balanced; each tree $T_y$ has height $h(T_y)\le \log|S^+_y|+o(\log n)$.
+
+For each $y\in\{1,\ldots,h\}$ and each node $x$ of $T_y$, let $B_x:=\{v\in S^+_y: x_y(v)=x\}$.  Since $x\in[a_v,b_v]$ for each $v\in B_x$, \cref{thin} implies the following property:
+\begin{compactenum}[(P3)]
+    \item $|B_x|\in O(t\log n)$.
+\end{compactenum}
+Let $\psi_y:S^+_y\to\{1,\ldots,O(t\log n)\}$ be a colouring of $S^+_y$ such that, for each $x\in V(T)$ and each distinct pair $v,w\in B_x$ $\psi(v)\neq\psi(w)$.
+
+
+For each vertex $(v,y)$ of $G$, the label $\ell(v,y)$ has these parts:
+
+\begin{compactenum}
+    \item $\alpha(y)$: a bitstring of length of $\log n-\log |S^+_y|+o(\log n)$.  Given $\alpha(y_1)$ and $\alpha(y_2)$ it is possible to distinguish between the following cases:
+    \begin{inparaenum}
+        \item $y_1=y_2$;
+        \item $y_1=y_2+1$;
+        \item $y_1=y_2-1$;
+        \item $|y_1-y_2|\ge 2$.
+    \end{inparaenum}
+
+    \item $\sigma_y(P_y(v))$: a bitstring of length at most $h(T_y)$ that encodes the path $P_y(v)$ where a 0 (respectively, 1) indicates a step from the current node to its left (respectively, right) child.
+
+    \item $\nu_y(v)$: a bitstring of length $o(\log n)$.  This bitstring is designed so that, for any node $v\in S^+_y\cap S^+_{y+1}$, it is possible to recover $\sigma_{y+1}(P_{y+1}(v))$ given only $\sigma_y(P_y(v))$ and $\nu_y(v)$.
+
+    % \item $\varphi(v)$: the colour of $v$ in the proper colouring of $H$ (a bitstring of length $\lceil\log(t+1)\rceil$).
+
+    \item $d_y(x_y(p_i(v)))$ for each $i\in\{1,\ldots,t+1\}$ (a bitstring of length $(t+1)\lceil\log(t+1)\rceil$).
+
+    \item $\psi_{y+b}(p_i(v))$ for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ (a bitstring of length $O(t\log\log n)$).
+
+    \item $a_y(v)$: A bitstring of length $3(t+1)$ that indicates, for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ whether $G$ contains the edge with endpoints $(v,y)$ and $(p_i(v),y+b)$ in $G$.
+\end{compactenum}
+
+
+
+
+
+
+
+
+\bibliographystyle{plainnat}
+\bibliography{universal2}
+
+\end{document}
