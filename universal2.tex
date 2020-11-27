@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass{patmorin}
 
 \usepackage{amssymb,amsthm,amsmath}
 \usepackage{url,html}
@@ -7,6 +7,8 @@
 \usepackage{paralist}
 \usepackage{todonotes}
 \usepackage[noend]{algorithmic}
+
+\setlength{\parskip}{1ex}
 
 \newcommand{\pref}[1]{(P\ref{#1})}
 \newcommand{\psref}[1]{(P\ref{#1}$^{\star}$)}
@@ -45,7 +47,9 @@ Without loss of generality, we may assume that $H$ is an edge-maximal graph of t
 
 Each vertex $w\in C_v$ is called an \emph{$H$-parent} of $v$.  Fix a proper colouring $\varphi:H\to\{1,\ldots,t+1\}$.  For any vertex $v$ of $H$, the \emph{$i$-parent} $p_i(v)$ of $v$ is the unique node $w\in C_v$ with $\varphi(w)=i$.  Note that $v$ is and $H$-parent of itself and, specifically, $v$ is the $\varphi(v)$-parent of itself.
 
-The scheme works as follows. Each vertex $v$ of $H$ is mapped to a real interval $[a_v,b_v]$ in such a way that $vw\in E(H)$ implies that $[a_v,b_v]\cap [a_w,b_w]\neq\emptyset$.  This mapping is also thin, in the following sense:
+The scheme makes use of binary search trees.\todo{Define BST}  For any node $x$ in a binary search tree $T$, $\sigma_T(x)$ is the binary string $b_1,\ldots,b_k$ obtained by from the root-to-$x$ path $x_0,\ldots,x_k$ in $T$ by setting $b_i=0$ or $b_i=1$ depending on whether $x_i$ is the left or right child of $x_{i-1}$, respectively.
+
+Each vertex $v$ of $H$ is mapped to a real interval $[a_v,b_v]$ in such a way that $vw\in E(H)$ implies that $[a_v,b_v]\cap [a_w,b_w]\neq\emptyset$.  This mapping is also thin, in the following sense:
 
 \begin{compactenum}[(P1)]
     \item for any $x\in \R$, $|\{v\in V(H): x\in[a_v,b_w]\}|\in O(t\log n)$.\label{thin}
@@ -53,21 +57,24 @@ The scheme works as follows. Each vertex $v$ of $H$ is mapped to a real interval
 
 For each $y\in\{0,\ldots,n+1\}$, let $L_y:=\{v\in V(H): (v,y)\in V(G)\}$ and let $S_y:=\bigcup_{v\in L_y}C_v$.  The labelling scheme first finds sets $S^+_1,\ldots,S^+_h$ of total size $O(n)$ such that $S^+_y\supseteq S_{y-1}\cup S_y\cup S_{y+1}$.\footnote{The original labelling scheme only uses $S^+_y\supseteq S_{y-1}\cup S_y$ but it is convenient for us to include $S_{y+1}$ as well and this change does not invalidate anything in the original scheme.}
 
-Now the scheme defines a sequence of binary search trees $T_1,\ldots,T_h$ such that, for each $y\in\{1,\ldots,h\}$ and each $v\in S^+_y$, $T_y$ contains at least one $x\in [a_v,b_v]$.  This leads to the following crucial definition: $x_{y}(v)$ is the minimum-depth node $x$ of $T_y$ such that $x\in [a_v,b_v]$. Note that $x_y(v)$ is well-defined since $T_y$ contains at least one node $x\in[a_v,b_v]$.   The following property follows from these definitions and Helly's Theorem:
+Now the scheme defines a sequence of binary search trees $T_1,\ldots,T_h$ such that, for each $y\in\{1,\ldots,h\}$ and each $v\in S^+_y$, $T_y$ contains at least one value $x\in [a_v,b_v]$.  This leads to the following crucial definition: For each $v\in S^+_y$, $x_{y}(v)$ is the minimum-depth node $x$ of $T_y$ such that $x\in [a_v,b_v]$. Note that $x_y(v)$ is well-defined since $T_y$ contains at least one node $x\in[a_v,b_v]$.   The following property follows from these definitions and Helly's Theorem:
 
 \begin{compactenum}[(P1)]\setcounter{enumi}{1}
     \item For any $v\in L_y$, there exists a path $P_y(v)$ that begins at the root of $T_y$ and contains every node in $X_y(v):=\{x_{y}(w): w\in C_v\}$.\label{clique-path}
 \end{compactenum}
 
-For each $y\in\{1,\ldots,h\}$ and each $v\in L_y$, we define $P_y(v)$ to be the minimum length path in $T_y$ that satisifies \pref{clique-path}, so that $P_y(v)$ begins at the root of $T$ and ends at the maximum-depth node in $X_y(v)$.
-
-The trees $T_1,\ldots,T_h$ are very well-balanced; each tree $T_y$ has height $h(T_y)\le \log|S^+_y|+o(\log n)$.
+For each $y\in\{1,\ldots,h\}$ and each $v\in L_y$, we define $P_y(v)$ to be the minimum length path in $T_y$ that satisifies \pref{clique-path}, so that $P_y(v)$ begins at the root of $T$ and ends at the node in $X_y(v)$ of maximum $T_y$-depth.
 
 For each $y\in\{1,\ldots,h\}$ and each node $x$ of $T_y$, let $B_x:=\{v\in S^+_y: x_y(v)=x\}$.  Since $x\in[a_v,b_v]$ for each $v\in B_x$, \pref{thin} implies the following property:
 \begin{compactenum}[(P1)]\setcounter{enumi}{2}
     \item $|B_x|\in O(t\log n)$. \label{small-bags-i}
 \end{compactenum}
 Let $\psi_y:S^+_y\to\{1,\ldots,O(t\log n)\}$ be a colouring of $S^+_y$ such that, for each $x\in V(T)$ and each distinct pair $v,w\in B_x$ $\psi(v)\neq\psi(w)$.
+
+\citet{dujmovic.esperet.ea:adjacency} show that such a sequence $T_1,\ldots,T_h$ of trees exists and that they are very well-balanced; each tree $T_y$ has height $h(T_y)\le \log|S^+_y|+o(\log n)$.  In addition to this, there exists a single function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for any $y\in\{1,\ldots,h-1\}$ and any $x\in V(T_y)\cap V(T_{y+1})$ there exists a bitstring $\mu_y(x)$ of length $o(\log n)$ such that $J(\sigma_{T_y}(x),\mu_y(x))=\sigma_{T_{y+1}}(x)$.
+
+
+
 
 \subsection{The Labels}
 
@@ -128,7 +135,7 @@ Therefore, the universal graph $I_n$ contains $k$ distinct vertices $z_1,\ldots,
 
 \section{A Sparse Universal Graph}
 
-We now describe how to modify the adjacency labelling scheme of \citet{dujmovic.esperet.ea:adjacency} so that the resulting universal subgraph is sparse.  As discussed above, the main obstacle comes from the fact that some vertex $(v,y)$ can have an $i$-parent $w:=p_i(v)$ such that $x_y(w)$ has depth much greater than $x_y(v)$.  In order to avoid this, we modify the function $x_y:S^+_y\to V(T_y)$ to create a new function $x'_y$ that avoids this. This is done by calling the following recursive procedure with the root of $T_y$ as its argument:
+We now describe how to modify the adjacency labelling scheme of \citet{dujmovic.esperet.ea:adjacency} so that the resulting universal subgraph is sparse.  As discussed above, the main obstacle comes from the fact that some vertex $(v,y)$ can have an $i$-parent $w:=p_i(v)$ such that $x_y(w)$ has $T_y$-depth much greater than $x_y(v)$.  In order to avoid this, we modify the function $x_y:S^+_y\to V(T_y)$ to create a new function $x'_y$ that avoids this. This is done by calling the following recursive procedure with the root of $T_y$ as its argument:
 
 \noindent
 \begin{minipage}{\textwidth}
@@ -138,7 +145,7 @@ We now describe how to modify the adjacency labelling scheme of \citet{dujmovic.
             \FOR{each $w\in C_v \cap S^+_y$}
                 \IF{$d_y(x_y(w)) > d_y(x)+1$}
                     \STATE{\COMMENT{make $x_y(w)$ is now a child of $x=x_y(v)$}}
-                    \STATE{$x_y(w)\gets\mbox{the depth-$(d_y(x)+1)$ ancestor of $x_y(w)$}$ \label{changes}}
+                    \STATE{$x_y(w)\gets\mbox{the depth-$(d_y(x)+1)$ $T_y$-ancestor of $x_y(w)$}$ \label{changes}}
                 \ENDIF
             \ENDFOR
         \ENDFOR
@@ -197,14 +204,14 @@ In this analysis, it will be helpful to think of $\ell(v,y)$ as having three mai
 
 Let $y':=\alpha(y)$ and let $x'=\sigma_y(x_y(v))$ and let $z'$ be the bitstring formed by concatenating the strings in (L1$^\star$).  Then we can think of $\ell(v,y)$ as a triple $(x',y',z')$ where $x'$, $y'$, and $z'$ are binary strings with $|x'|+|y'|\le \log n + \lambda$ and $|z'|\le \lambda$ where $\lambda\in o(\log n)$.
 
-For the purposes of counting edges, it will be helpful to think of the graph $U_n$ as a directed graph.
-
 \begin{lemma}\label{flat-edges}
     The graph $U_n$ contains at most $n^{1+o(1)}$ edges of the form $(x_1,y,z_1)(x_2,y,z_2)$.
 \end{lemma}
 
 \begin{proof}
-    Indeed, if $A(\ell(v_1,y,z_1),\ell(v_2,y,z_2))=1$ then $v_1v_2\in E(H)$, so $v_1$ is an $H$-parent of $v_2$ or vice-versa. This implies that $v_1\in C_{v_2}$ or $v_2\in C_{v_1}$.  Then \pref{clique-path} implies that the path $P_{y}(v_2)$ contains $x_y(v_1)$ or $P_y(v_1)$ contains $x_y(v_2)$.  In either case, $x_y(v_1)$ is a $T$-ancestor or a $T$-descendant of $x_y(v_2)$ so $x_1=\sigma_y(x_y(v_1))$ is a prefix of $x_2=\sigma_y(x_y(v_2))$ or $x_2=\sigma_y(x_y(v_2))$ is a prefix of $x_1=\sigma_y(x_y(v_1))$.  Straightforward counting\todo{Don't be lazy.} (see \cite[Lemma~X]{esperet.joret.ea:sparse}) then shows that, for a fixed value $(x_1,y,z_1)$ there are at most $n^{1+o(1)}/2^{|x_1|}$ choices of $(x_2,z_2)$ such that $x_1$ is a prefix of $x_2$ or vice-versa.  A second round of summing, over choices of $(x_1,z_1)$ shows that the total number of edges of this form is $n^{1+o(1)}$ and completes the proof.
+    Let $\ell_i:=(x_i,y,z_i)$ for each $i\in\{1,2\}$.  If the edge $\ell_1\ell_2\in E(U_n)$, then there exists some $t$-tree $H$ some path $P$, some $n$-vertex subgraph $G$ of $H\boxtimes P$, and some edge $(v_1,y)(v_2,y)$ of $G$ such that $\ell_1=\ell_G(v_1,y)$ and $\ell_G(v_2,y)=\ell_2$.
+
+    The existence of the edge $(v_1,y)(v_2,y)$ in $G$ implies the existence of the edge $v_1v_2$ in $H$.  Therefore, $v_1$ is an $H$-parent of $v_2$, or vice-versa.  Without loss of generality, suppose that $v_1$ is an $H$-parent of $v_2$ and imagine orienting the edge $\ell_1\ell2$ as $\overrightarrow{\ell_2\ell_1}$.  By construction $x_1=\sigma_y(x_y(v_1)))$ is either a prefix of $x_2=\sigma_y(x_y(v_1)))$ or $x_2\in \{x_2\circ b : b\in\{0,1\}\}$.  Therefore, for a fixed $x_1$, there are only $O(\log n)$ possible choices of $x_2$.  There are therefore only $O(\log n)\cdot 2^{o(\log n)}=n^{o(1)}$ choices for $(x_2,z_2)$.  Therefore, the edges of $U_n$ of the form $(x_1,y,z_1)(x_2,y,z_2)$ can be oriented so that each vertex of $U_n$ has $n^{o(1)}$ outgoing edges. Therefore, the number of such edges is at most $|U_n|\cdot n^{o(1)} = n^{1+o(1)}$.
 \end{proof}
 
 \begin{lemma}\label{flat-edges}
@@ -212,7 +219,15 @@ For the purposes of counting edges, it will be helpful to think of the graph $U_
 \end{lemma}
 
 \begin{proof}
-\todo[inline]{Take a bit of time to explain $\alpha(y)$ more carefully so it's clear that, for fixed $y_1$ there are only $O(\log n)$ choices of $y_2$ that results in case (b) or (c).}
+    Let $\ell_i:=(x_i,y_i,z_i)$ for each $i\in\{1,2\}$.  If the edge $\ell_1\ell_2\in E(U_n)$, then there exists some $t$-tree $H$ some path $P$, some $n$-vertex subgraph $G$ of $H\boxtimes P$, and some edge $(v_1,y_1')(v_2,y_2')$ of $G$ such that $\ell_1=\ell_G(v_1,y_1')$ and $\ell_G(v_2,y_2')=\ell_2$.
+
+    Since $y_1\neq y_2$, $y_1'\neq y_2'$.
+    The existence of the edge $(v_1,y_1')(v_2,y_2')$ therefore implies that $y_1'y_2'$ is an edge of $P$ so that (without loss of generality) $y_1'=y$ and $y_2'=y+1$ for some $y\in\{1,\ldots,h-1\}$.  Now, $y_1=\alpha_G(y)$ and $y_2=\alpha_G(y+1)$.  Specifically $y_2\in D(y_1)$ and, by [an earlier explanation]\todo{Go back and add explanation and definition $D(\cdot)$} $|D(y_1)|\in O(\log n)$.  Therefore, for a fixed $y_1$, the number of possible choices for $y_2$ is $O(\log n)$.
+
+    By a similar line of reasoning, we can conclude that $v_1=v_2$ or that $v_1v_2\in E(H)$.  If $v_1=v_2$, then $x_2=J(x_1,\mu_y(x_1))$. Since $|\mu_y|\in o(\log n)$, the number of options for $\mu_y$ and hence the number of options for $x_2$ is $2^{o(\log n)}=n^{o(1)}$.
+
+    Finally, suppose that $v_1\neq v_2$ so that $v_1v_2\in E(H)$.  Recall the definition of $S^+_y$, which implies that $v_1,v_2\in S^+_y\cap S^+_{y+1}$.  Since $v_1v_2\in E(H)$, one of $v_1$ or $v_2$ is an $H$-parent of the other. Without loss of generality suppose that $v_1$ is an $H$-parent of $v_2$, so $v_1\in C_{v_2}$.  This implies that $x_2':=\sigma_y(x_y(v_2))$ is a prefix of $x_1=\sigma_y(x_y(v_1))$ or $x_1$ is a prefix of $x_2'$.  For a fixed $x_1$, the number of choices for $x_2'$ is at most $n^{1+o(1)}/2^{|x_1|}$. Furthermore, there exists some $\mu_y(x_2')$ such that
+
 
 \todo[inline]{Next, use the awkward-looking definition of $U_n$ to argue that, if an $(x_1,y_1,z_1)(x_2,y_2,z_2)$ is an edge of $U_n$ it's because there exists a graph $G$ with an edge $(v_1,y_1)(v_2,y_2)$ such that $\ell_G(v_1,y_1)=(x_1,y_1,z_1)$ and $\ell_G(v_2,y_2)=(x_2,y_2,z_2)$ [Notation conflict $y_1$ and $y_2$].  In particular, when computing the labelling $\ell_G$, $v_2\in S^+_{y_1}$.  This means that $x_{y_1}(v_2)$ is defined and is a prefix of $x_{y_1}(v_1)$.   Now the rest of the counting is just like in the last paper.}
 \end{proof}
