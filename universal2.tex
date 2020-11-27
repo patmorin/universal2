@@ -86,15 +86,17 @@ It is helpful to think of $x_y$ as a function $x_y:S^+_y\to V(T_y)$.  For each $
     \item For each $y\in\{1,\ldots,h\}$ and each $x\in V(T_y)$, $|B_x|\in O(t\log n)$. \label{small-bags-i}
 \end{compactenum}
 
-Let $\psi_y:S^+_y\to\{1,\ldots,O(t\log n)\}$ be a colouring of $S^+_y$ such that, for each $x\in V(T)$ and each distinct pair $v,w\in B_x$ $\psi_y(v)\neq\psi_y(w)$.  Such a colouring exists by \pref{small-bags-i} and because $x_y$ is a function so each $v\in S^+_y$ appears in $B_x$ for exactly one $x\in V(T)$.  Note that, for any $v\in S^+_y$, the pair $(x_y(v), \psi_y(v))$ uniquely identifies $v$, i.e, for any $(a,b)$ there is at most one
-$v\in S^+_y$ such $x_y(v)=a$ and $\psi_y(v)=b$.  Since the signature function $\sigma_y$ is injective, this means that $\sigma_y(x_y(v))$ and $\psi_y(v)$ also uniquely identify $v$.
+Let $\psi_y:S^+_y\to\{1,\ldots,O(t\log n)\}$ be a colouring of $S^+_y$ such that, for each $x\in V(T)$ and each distinct pair $v,w\in B_x$ $\psi_y(v)\neq\psi_y(w)$.  Such a colouring exists by \pref{small-bags-i} and because $x_y$ is a function so each $v\in S^+_y$ appears in $B_x$ for exactly one $x\in V(T)$.  Note that, for any $v\in S^+_y$, the pair $(x_y(v), \psi_y(v))$ uniquely identifies $v$.  Since the signature function $\sigma_y$ is injective, this means that $\sigma_y(x_y(v))$ and $\psi_y(v)$ also uniquely identify $v$.
 
+\begin{compactenum}[(P1)]\setcounter{enumi}{3}
+    \item For any $y\in\{1,\ldots,h\}$ and any distinct $v,w\in S^+_h$, $\sigma_y(x_y(v))\neq \sigma_y(x_y(x)) $ or $\psi_y(v)\neq\psi_y(w)$.\label{unique-match}
+\end{compactenum}
 
 The binary search tree sequence $T_1,\ldots,T_h$ is very special because it has two important properties:
-\begin{inparaenum}[(i)]
-    \item each tree $T_y$ has height $h(T_y)\le \log|S^+_y|+o(\log n)$ and
-    \item there exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for any $y\in\{1,\ldots,h-1\}$ and any $x\in V(T_y)\cap V(T_{y+1})$ there exists a bitstring $\mu_y(x)$ of length $o(\log n)$ such that $J(\sigma_{T_y}(x),\mu_y(x))=\sigma_{T_{y+1}}(x)$.
-\end{inparaenum}
+\begin{compactenum}[(P1)]\setcounter{enumi}{4}
+    \item For each $y\in\{1,\ldots,h\}$, $h(T_y)\le \log|S^+_y|+o(\log n)$.
+    \item There exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for each $y\in\{1,\ldots,h-1\}$ and each $x\in V(T_y)\cap V(T_{y+1})$ there exists a bitstring $\mu_y(x)$ of length $o(\log n)$ such that $J(\sigma_{T_y}(x),\mu_y(x))=\sigma_{T_{y+1}}(x)$.
+\end{compactenum}
 The bitstring $\mu_y(x)$ is called a \emph{transition code}.  The existence of the tree sequence $T_1,\ldots,T_h$ and corresponding transition codes is non-trivial and is the primary technical tool used to establish the results in \cite{dujmovic.esperet.ea:adjacency,esperet.joret.ea:sparse}.
 
 
@@ -113,20 +115,21 @@ For each vertex $(v,y)$ of $G$, the label $\ell(v,y)$ has these parts:
         \item $|y_1-y_2|\ge 2$.
     \end{inparaenum}
 
-    \item $\sigma_y(P_y(v))$: a bitstring of length at most $h(T_y)$ that encodes the path $P_y(v)$ where a 0 (respectively, 1) indicates a step from the current node to its left (respectively, right) child.
+    \item $\sigma_y(P_y(v))$: this is a bitstring of length at most $h(T_y)\le \log|S^+_y| + o(\log n)$
+    % a bitstring of length at most $h(T_y)$ that encodes the path $P_y(v)$ where a 0 (respectively, 1) indicates a step from the current node to its left (respectively, right) child.
 
     \item $\mu_y(v)$: a bitstring of length $o(\log n)$.  This bitstring is designed so that, for any node $v\in S^+_y\cap S^+_{y+1}$, it is possible to recover $\sigma_{y+1}(P_{y+1}(v))$ given only $\sigma_y(P_y(v))$ and $\mu_y(v)$.
 
     \item $\varphi(v)$: the colour of $v$ in the proper colouring of $H$ (a bitstring of length $\lceil\log(t+1)\rceil$).
 
-    \item $d_y(x_y(p_i(v)))$\todo{define $d_y(x)$ as the depth of $x$ in $T_y$} for each $i\in\{1,\ldots,t+1\}$ (a bitstring of length $(t+1)\lceil\log(t+1)\rceil$).
+    \item $d_y(x_y(p_i(v)))$ for each $i\in\{1,\ldots,t+1\}$ (a bitstring of length $(t+1)\lceil\log(t+1)\rceil$).
 
-    \item $\psi_{y+b}(p_i(v))$ for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ (a bitstring of length $O(t\log\log n)$).\label{psi}
+    \item $\psi_{y+b}(p_i(v))$ for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ (a bitstring of length $O(t\log\log n + t\log t)$).\label{psi}
 
     \item $a_y(v)$: A bitstring of length $3(t+1)$ that indicates, for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ whether $G$ contains the edge with endpoints $(v,y)$ and $(p_i(v),y+b)$.
 \end{compactenum}
 
-The label (L1) requires some further explanation. $\alpha(y)$ consists of two parts: $(\alpha_1(y))$ is a bitstring of length at most $\log n-\log |S^+_y|$ and $\alpha_2(y)$ is a bitstring of length at most $\log\log n$.  These strings are designed so that there is a universal function $N$ such that $N(\alpha(y_1))=\alpha_1(y_2)$ if and only if $y_2=y_1+1$.  Clearly this make it possible to distinguish between cases~(a)--(d).  It also has the following implication:  For any fixed $\alpha(y_1)$ there are at most $2^{\log \log n}=\log n$ values of $\alpha(y_2)$ that fall into case (b).  Indeed, these are $D(\alpha(y_1)):=\{N(\alpha(y_1))\mathbin{\circ} s: s\in\{0,1\}^{\log\log n}\}$.
+The label (L1) requires some further explanation. $\alpha(y)$ consists of two parts: $(\alpha_1(y))$ is a bitstring of length at most $\log n-\log |S^+_y|$ and $\alpha_2(y)$ is a bitstring of length at most $\log\log n+O(1)$.  These strings are designed so that there is a universal function $N$ such that $N(\alpha(y_1))=\alpha_1(y_2)$ if and only if $y_2=y_1+1$.  Clearly this make it possible to distinguish between cases~(a)--(d).  It also has the following implication:  For any fixed $\alpha(y_1)$ there are at most $2^{\log \log n+O(1)}=O(\log n)$ values of $\alpha(y_2)$ that fall into case (b).  Indeed, these are $D(\alpha(y_1)):=\{N(\alpha(y_1))\mathbin{\circ} s: s\in\{0,1\}^{\log\log n}\}$.
 
 \subsection{Adjacency Testing}
 
@@ -136,9 +139,7 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
     \begin{enumerate}[(a)]
         \item $y:=y_1=y_2$.  For each $i\in\{1,\ldots,t+1\}$, determine if $v_1=p_i(v_2)$ (or \textit{vice-versa}) and, if so, use $a_y(v_2)$ (or $a_y(v_1)$, respectively) to determine if $(v_1,y)$ and $(v_2,y)$ are adjacent in $G$. Specifically, if $v_1=p_i(v_2)$ then one of the bits in $a_y(v_2)$ indicates whether or $(v_1,y_1)$ and $(v_2,y_1)$ are adjacent in $G$. If $v_1\neq p_i(v_2)$ and $v_2\neq p_i(v_1)$ for every $i\in\{1,\ldots,h\}$, then $v_1v_2\not\in E(H)$ and hence $(v_1,y)$ and $(v_2,y)$ are not adjacent in $G\subseteq H\boxtimes P$.
 
-        To test if $v_1=p_i(v_2)$, recover $\sigma_y(x_y(p_i(v_2)))$\todo{define $\sigma_y(x)$ as the signature of the path from the root of $T_y$ to $x$.} from $\sigma_y(P_y(v))$ and $d_y(x_y(p_i(v)))$.  Next, recover $d_y(x_y(v_1)):=d_y(x_y(p_{\varphi(v_1)}(v_1)))$ and then  $\sigma_y(x_y(v_1))$ from $\sigma_y(P_y(v_1))$ and $d_y(x_y(v_1))$.
-
-        If $\sigma_y(x_y(p_i(v_2))) \neq \sigma_y(x_y(v_1))$ then $v_1\neq p_i(v_2)$.  Otherwise, $p_i(v_2), v_1 \in B_x$ for some node $x$ of $T_y$ (determined by $\sigma_y(x_y(p_i(v_2))) \neq \sigma_y(x_y(v_1))$).  In this case $v_1=p_i(v_2)$ if and only $\psi_y(v_1)=\psi_y(p_i(v_2))$.  The colour $\psi_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$ and $\psi_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi_y(v_1)=\psi_y(p_{\varphi(v_1)}(v_1))$.
+        By \pref{unique-match}, testing if $v_1=p_i(v_2)$, is equivalent to testing if $\sigma_y(x_y(p_i(v_2)))=\sigma_y(x_y(v_1))$ and $\psi_y(v_2)=\psi_y(v_1)$.  To see that $\ell(v_1,y_1)$ and $\ell(v_2,y)$ contain enough information to do this test, first recover $\sigma_y(x_y(p_i(v_2)))$ from $\sigma_y(P_y(v))$ and $d_y(x_y(p_i(v)))$.  Next, recover $d_y(x_y(v_1)):=d_y(x_y(p_{\varphi(v_1)}(v_1)))$ and then  $\sigma_y(x_y(v_1))$ from $\sigma_y(P_y(v_1))$ and $d_y(x_y(v_1))$. The colour $\psi_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$ and $\psi_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi_y(v_1)=\psi_y(p_{\varphi(v_1)}(v_1))$.
 
         \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(P_y(v_1))$ from $\sigma_{y_1}(P_{y_1}(v_1))$ and $\mu_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
 
@@ -249,9 +250,9 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
     \begin{enumerate}[(a)]
         \item $y:=y_1=y_2$.  For each $i\in\{1,\ldots,t+1\}$, determine if $v_1=p_i(v_2)$ (or \textit{vice-versa}) and, if so, use $a_y(v_2)$ (or $a_y(v_1)$, respectively) to determine if $(v_1,y)$ and $(v_2,y)$ are adjacent in $G$. Specifically, if $v_1=p_i(v_2)$ then one of the bits in $a_y(v_2)$ indicates whether or $(v_1,y_1)$ and $(v_2,y_1)$ are adjacent in $G$. If $v_1\neq p_i(v_2)$ and $v_2\neq p_i(v_1)$ for every $i\in\{1,\ldots,h\}$, then $v_1v_2\not\in E(H)$ and hence $(v_1,y)$ and $(v_2,y)$ are not adjacent in $G\subseteq H\boxtimes P$.
 
-        To test if $v_1=p_i(v_2)$, recover $\sigma_y(x_y(p_i(v_2)))$ from $\sigma_y(P'_y(v))$ and $d_y(x'_y(p_i(v)))$.  Next, recover $d_y(x'_y(v_1))=d_y(x'_y(p_{\varphi(v_1)}(v_1)))$ and then  $\sigma_y(x'_y(v_1))$ from $\sigma_y(P'_y(v_1))$ and $d_y(x'_y(v_1))$.
-
-        If $\sigma_y(x'_y(p_i(v_2))) \neq \sigma_y(x'_y(v_1))$ then $v_1\neq p_i(v_2)$.  Otherwise, $p_i(v_2), v_1 \in B'_x$ for some node $x$ of $T_y$ (determined by $\sigma_y(x'_y(p_i(v_2))) = \sigma_y(x'_y(v_1))$).  In this case $v_1=p_i(v_2)$ if and only $\psi'_y(v_1)=\psi'_y(p_i(v_2))$.  The colour $\psi'_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$ and $\psi'_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi'_y(v_1)=\psi'_y(p_{\varphi(v_1)}(v_1))$.
+        By \pref{unique-match}, testing if $v_1=p_i(v_2)$, is equivalent to testing if $\sigma_y(x'_y(p_i(v_2)))=\sigma_y(x'_y(v_1))$ and $\psi'_y(v_2)=\psi'_y(v_1)$.  To see that $\ell(v_1,y_1)$ and $\ell(v_2,y)$ contain enough information to do this test, first recover
+        $d_y(x'_y(v_1)):=d_y(x'_y(p_{\varphi(v_1)}(v_1)))$ and then  $\sigma_y(x'_y(v_1))$ from $\sigma_y(x_y(v_1))$ and $d_y(x'_y(v_1))$.
+        Next recover $\sigma_y(x'_y(p_i(v_2)))$ from $\sigma_y(P'_y(v_2))$ and $d_y(x'_y(p_i(v)))$.   The colour $\psi_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$ and $\psi_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi_y(v_1)=\psi_y(p_{\varphi(v_1)}(v_1))$.\todo{Double check}
 
         \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(x_y(v_1))$ from $\sigma_{y_1}(x_{y_1}(v_1))$ and $\mu'_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
 
