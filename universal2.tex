@@ -14,8 +14,10 @@
 \newcommand{\psref}[1]{(P\ref{#1}$^{\star}$)}
 
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
 
 \newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
 
 \title{\MakeUppercase{Sparse Induced-Universal Graphs for Planarity}}
 \author{Louis Esperet, Gwenaël Joret, and Pat Morin}
@@ -24,12 +26,15 @@
 
 \maketitle
 
+\begin{abstract}
+    We show that, for every integer $n$, there exists a graph $U_n$ with $n^{1+o(1)}$ vertices and edges such that, for any $n$-vertex planar graph $G$, $U_n$ contains an induced subgraph isomorphic to $G$.  This result extends to other graph families having a product structure theorem, including bounded genus graphs, apex-minor-free graphs, bounded-degree graphs from minor-closed families, and $k$-planar graphs for constant $k$.
+\end{abstract}
+
 \section{Introduction}
 
 Very recently, \citet{dujmovic.esperet.ea:adjacency} described a $(1+o(1))\log n$-bit adjacency labelling scheme for planar graphs.  This means that there is a single function $A:\{0,1\}^*\times\{0,1\}^* \to\{0,1\}$ such that, for any $n$ vertex planar graph $G$ there is a labelling $\ell:V(G)\to\{0,1\}^{(1+o(1))\log n}$ for which $A(\ell(v),\ell(w))=1$ if and only if $vw\in E(G)$.
 
-This result has the following immediate consequence: For every positive integer $n$, there exists a graph $I_n$ having $n^{1+o(1)}$ \emph{vertices} such that, for every $n$-vertex planar graph $G$, $I_n$ contains an induced subgraph isomorphic to $G$.  To see this, let $I_n$ be the graph with vertex set $V(I_n):=\{0,1\}^{(1+o(1))\log n}$ and for which $xy\in E(I_n)$ if and only $A(x,y)=1$.  Then, for any $n$-vertex planar graph $G$ with labelling $\ell$, the induced subgraph $I_n[\{\ell(v):v\in V(G)\}]$ is isomorphic to $V(G)$.
-The graph $I_n$ is called an \emph{induced-universal graph} for the class of $n$-vertex planar graphs.
+This result has the following immediate consequence: For every positive integer $n$, there exists a graph $I_n$ having $n^{1+o(1)}$ \emph{vertices} such that, for every $n$-vertex planar graph $G$, $I_n$ contains an induced subgraph isomorphic to $G$.  To see this, let $I_n$ be the graph with vertex set $V(I_n):=\{0,1\}^{(1+o(1))\log n}$ and for which $xy\in E(I_n)$ if and only $A(x,y)=1$.  Then, for any $n$-vertex planar graph $G$ with labelling $\ell$, the induced subgraph $I_n[\{\ell(v):v\in V(G)\}]$ is isomorphic to $V(G)$.  The graph $I_n$ is called an \emph{induced-universal graph} for the class of $n$-vertex planar graphs.
 
 Using one of the main ideas from \cite{dujmovic.esperet.ea:adjacency}, \citet{esperet.joret.ea:sparse} showed that there exists a graph $S_n$ with $n^{1+o(1)}$ \emph{edges} such that, for every $n$-vertex planar graph $G$, $S_n$ contains a subgraph (not necessarily induced) isomorphic to $G$.  The graph $S_n$ is called a \emph{subgraph-universal graph} for the class of $n$-vertex planar graphs.
 
@@ -81,6 +86,7 @@ The binary search tree sequence $T_1,\ldots,T_h$ is very special because it has 
 
 
 \subsection{The Labels}
+\label{labels-i}
 
 For each vertex $(v,y)$ of $G$, the label $\ell(v,y)$ has these parts:
 
@@ -263,7 +269,7 @@ In this analysis, it will be helpful to think of each label $\ell_G(v,y')$ in th
     Therefore, each vertex $(x_1,y,z_1)$ of $U_n$ has at most $n^{o(1)}$ edges directed away from it.  Therefore the number of edges in $U_n$ of the form $(x_1,y,z_1)(x_2,y,z_2)$ in $U_n$ is at most $|V(U_n)|\cdot n^{o(1)}=n^{1+o(1)}$.
 \end{proof}
 
-\begin{lemma}\label{flat-edges}
+\begin{lemma}\label{vertical-edges}
     The graph $U_n$ contains at most $n^{1+o(1)}$ edges of the form $(x_1,y_1,z_1)(x_2,y_2,z_2)$ with $y_1\neq y_2$ is at most $n^{1+o(1)}$.
 \end{lemma}
 
@@ -275,16 +281,17 @@ In this analysis, it will be helpful to think of each label $\ell_G(v,y')$ in th
 
     By a similar line of reasoning, we can conclude that $v_1=v_2$ or that $v_1v_2\in E(H)$.  If $v_1=v_2$, then $x_2=J(x_1,\mu_y(x_1))$. Since $|\mu_y|\in o(\log n)$, the number of options for $\mu_y$ and hence the number of options for $x_2$ is $2^{o(\log n)}=n^{o(1)}$.
 
-    Suppose, therefore, that $v_1\neq v_2$ so that $v_1v_2\in E(H)$.  Recall the definition of $S^+_y$, which implies that $v_1,v_2\in S^+_y\cap S^+_{y+1}$.  Since $v_1v_2\in E(H)$, one of $v_1$ or $v_2$ is an $H$-parent of the other. Without loss of generality suppose that $v_1$ is an $H$-parent of $v_2$.  By \pref{clique-path}, one of $x_2':=\sigma_y(x_y(v_2))$ or $x_1=\sigma_y(x_y(v_1))$ is a prefix of the other.  As in the previous proof, this implies that, for a fixed $x_1$, the number of choices of $(x_2',z_1)$ is $n^{1+o(1)}/2^{|x_1|}$.
+    Suppose, therefore, that $v_1\neq v_2$ so that $v_1v_2\in E(H)$.  Recall the definition of $S^+_y$, which implies that $v_1,v_2\in S^+_y\cap S^+_{y+1}$.  Since $v_1v_2\in E(H)$, one of $v_1$ or $v_2$ is an $H$-parent of the other. Since $(v_2,y+1)\in V(G)$, $v_2\in S^+_y$ so $x_y(v_2)$ is defined. By \pref{clique-path}, one of $x_2':=\sigma_y(x_y(v_2))$ or $x_1=\sigma_y(x_y(v_1))$ is a prefix of the other.  Without loss of generality, suppose $x_2'$ is a prefix of $x_1$ and direct the edge $\ell_1\ell_2$ away from $\ell_1$.
 
-    Now, there exists a binary string $\nu'_y(v_2)$ of length $o(\log n)$ such that $J(x_2',\nu'_y(v_2))=\sigma_{y+1}(x_{y+1}(v))=x_2$.  For a fixed $x_2'$, the number of choices of $\nu'_y(v_2)$ is $2^{o(\log n)}=n^{o(1)}$ and, since $J$ is a function, the number of choices for $x_2$ is at most $n^{o(1)}$.  Therefore, for fixed $x_1,x_2',z_1$, the number of possible choices for $(x_2,z_2)$ is at most $n^{o(1)}\cdot 2^\lambda = n^{o(1)}$.
-
-    To summarize, in any of the cases $v_1=v_2$ or $v_1\neq v_2$, for a fixed $(x_1,y_1,z_1)$, the number of choices for $(x_2,y_2,z_2)$ is $n^{1+o(1)}/2^{|x_1|}$.  We can now finish as in the previous proof by summing over the $\log n+\lambda+1$ possible values of $|x_1|$ to get an upper bound of
-    \[
-        \sum_{r=0}^{\log n+\lambda} 2^r\cdot n^{o(1)}\cdot n^{1+o(1)}/2^r
-        = n^{1+o(1)} \enspace . \qedhere
-    \]
+    As in the previous proof, the number of choices for $x_2'$ is $O(\log n)=n^{o(1)}$.
+    Now, there exists a binary string $\nu'_y(v_2)$ of length $o(\log n)$ such that $J(x_2',\nu'_y(v_2))=\sigma_{y+1}(x_{y+1}(v))=x_2$.  For a fixed $x_2'$, the number of choices of $\nu'_y(v_2)$ is $2^{o(\log n)}=n^{o(1)}$ and, since $J$ is a function, the number of choices for $x_2$ is at most $n^{o(1)}$.  Therefore, for fixed $(x_1,y_1,z_1)$, the number of possible choices for $(x_2,y_2,z_2)$ that result in an edge directed away from $(x_1,y_1,z_1)$ is at most $n^{o(1)}$.  Therefore, the total number of edges in $U_n$ of the form form $(x_1,y_1,z_1)(x_2,y_2,z_2)$ with $y_1\neq y_2$ is at most $|V(U_n)|\cdot n^{o(1)} = n^{1+o(1)}$.
 \end{proof}
+
+\cref{flat-edges,vertical-edges} immediately imply our main theorem:
+
+\begin{theorem}
+    For each fixed integer $t\ge 1$ and each $n\in \N$ there exists a graph $U_n$ with $|V(U_n)|=n^{1+o(1)}$, $|E(U_n)|= n^{1+o(1)}$ such that, for every $t$-tree $H$, every path $P$, and every $n$-vertex subgraph $G$ of $H\boxtimes P$, $U_n$ contains an induced subgraph isomorphic to $G$.
+\end{theorem}
 
 \section{Conclusions}
 
