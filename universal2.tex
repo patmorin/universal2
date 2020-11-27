@@ -27,7 +27,7 @@
 \maketitle
 
 \begin{abstract}
-    We show that, for every integer $n$, there exists a graph $U_n$ with $n^{1+o(1)}$ vertices and edges such that, for any $n$-vertex planar graph $G$, $U_n$ contains an induced subgraph isomorphic to $G$.  This result extends to other graph families having a product structure theorem, including bounded genus graphs, apex-minor-free graphs, bounded-degree graphs from minor-closed families, and $k$-planar graphs for constant $k$.
+    We show that, for $n\in\N$, there exists a graph $U_n$ with $n^{1+o(1)}$ vertices and edges such that, for any $n$-vertex planar graph $G$, $U_n$ contains an induced subgraph isomorphic to $G$.  This result extends to other graph families having a product structure theorem, including bounded genus graphs, apex-minor-free graphs, bounded-degree graphs from minor-closed families, and $k$-planar graphs for constant $k$.
 \end{abstract}
 
 \section{Introduction}
@@ -38,23 +38,33 @@ This result has the following immediate consequence: For every positive integer 
 
 Using one of the main ideas from \cite{dujmovic.esperet.ea:adjacency}, \citet{esperet.joret.ea:sparse} showed that there exists a graph $S_n$ with $n^{1+o(1)}$ \emph{edges} such that, for every $n$-vertex planar graph $G$, $S_n$ contains a subgraph (not necessarily induced) isomorphic to $G$.  The graph $S_n$ is called a \emph{subgraph-universal graph} for the class of $n$-vertex planar graphs.
 
-Notice the contrasts between these two results: $I_n$ contains every $n$-vertex planar graph $G$ as an \emph{induced} subgraph whereas $S_n$ may only contain $G$ as a subgraph.  On the other hand, the graph $S_n$ is sparse, having only $n^{1+o(1)}$ edges whereas $I_n$ has $n^{1+o(1)}$ vertices and may have have $n^{2+o(1)}$ edges.
+Notice the contrasts between these two results: $I_n$ contains every $n$-vertex planar graph $G$ as an \emph{induced} subgraph whereas $S_n$ may only contain $G$ as a subgraph but not an induced subgraph.  Note that these two notions are very different: $K_n$ contains every at most $n$-vertex graph as a subgraph, but only contains cliques as induced subgraphs. On the other hand, the graph $S_n$ is sparse, having only $n^{1+o(1)}$ edges whereas $I_n$ has $n^{1+o(1)}$ vertices and may have have $n^{2+o(1)}$ edges.
 
-In this paper we show that, for every positive integer $n$, there exist a sparse induced universal graph $U_n$ for the class of $n$-vertex planar graphs.  More precisely, $U_n$ has $n^{1+o(1)}$ edges and vertices and, for every $n$-vertex planar graph $G$, $U_n$ contains an induced subgraph isomorphic to $G$.
+In this paper we show that there exists \emph{sparse} \emph{induced}-universal graphs for planarity:
+
+\begin{theorem}\label{main-planar}
+    For every $n\in\N$, there exist a a graph $U_n$ having $n^{1+o(1)}$ edges and vertices and such that, for every $n$-vertex planar graph $G$, $U_n$ contains an induced subgraph isomorphic to $G$.
+\end{theorem}
+
+The remainder of this paper is organized as follows. In \cref{review} we review the adjacency labelling scheme of \cite{dujmovic.esperet.ea:adjacency} that is the starting point for this work and argue that this labelling scheme does not produce a sparse induced-universal graph $I_n$.  In \cref{modifications} we describe a non-trivial modification of this labelling scheme and show that this modification of the labelling scheme does produce a sparse induced-universal graph $U_n$ that proves \cref{main-planar}.  \Cref{summary} summarizes and concludes.
+
 
 
 \section{Review of Adjacency Labelling}
 \label{review}
 
-We now summarize the most relevant aspects of the adjacency labelling scheme of \citet{dujmovic.esperet.ea:adjacency}.  The scheme works for any $n$-vertex $G$ that such that there exists some treewidth at most $t$ graph $H$ and some path $P$ such that $G$ is a subgraph of $H\boxtimes P$. Without loss of generality, we may assume that the vertices of $P$ are the integers $1,\ldots,h$ in the order they occur on the path $P$ and that, for each $y\in\{1,\ldots,h\}$ there exists at least one $v\in V(H)$ such that $(v,y)\in V(G)$.
+We now summarize review the most relevant aspects of the adjacency labelling scheme of \citet{dujmovic.esperet.ea:adjacency}.  For any integer $t\ge 1$, let $\mathcal{G}_t$ the set of graphs that contains, for every $t$-tree $H$ and every path $P$, every subgraph of $H\boxtimes P$.  The labelling scheme of \citet{dujmovic.esperet.ea:adjacency} works any $n$-vertex member of $\mathcal{G}_t$ for any constant $t$.  In particular, it works for any $n$-vertex planar graph because $\mathcal{G}_8$ contains every planar graph \cite{X}.
 
-Without loss of generality, we may assume that $H$ is an edge-maximal graph of treewidth $t$ and has at least $t+1$ vertices.  Fix a tree decomposition $(B_x:x\in V(T))$ of $H$ in which each bag has size exactly $t+1$ and in which no two bags have the same contents.  Root $T$ at an arbitrary node $r$ and, for each vertex $v$ of $H$, let $C_v:=B_x$ where $x$ is the minimum-depth node of $T$ such that $v\in B_x$.  The vertex set $C_v$ has size $t+1$, includes $v$ and is called the \emph{family clique} of $v$.
+We now describe how the labelling scheme works for some $n$-vertex member $G$ of $\mathcal{G}_t$, so $G$ is a subgraph of $H\boxtimes P$ for some $t$-tree $H$ and some path $P$.  Without loss of generality, we may assume that the vertices of $P$ are the integers $1,\ldots,h$ in the order they occur on the path $P$ and that, for each $y\in\{1,\ldots,h\}$ there exists at least one $v\in V(H)$ such that $(v,y)\in V(G)$.
+
+Without loss of generality, we may assume that $H$ has at least $t+1$ vertices. Fix a tree decomposition $(B_x:x\in V(T))$ of $H$ in which each bag has size exactly $t+1$ and in which no two bags have the same contents.  Root $T$ at an arbitrary node $r$ and, for each vertex $v$ of $H$, let $C_v:=B_x$ where $x$ is the minimum-depth node of $T$ such that $v\in B_x$.  The vertex set $C_v$ has size $t+1$, includes $v$ and is called the \emph{family clique} of $v$.
 
 Each vertex $w\in C_v$ is called an \emph{$H$-parent} of $v$.  Fix a proper colouring $\varphi:H\to\{1,\ldots,t+1\}$.  For any vertex $v$ of $H$, the \emph{$i$-parent} $p_i(v)$ of $v$ is the unique node $w\in C_v$ with $\varphi(w)=i$.  Note that $v$ is and $H$-parent of itself and, specifically, $v$ is the $\varphi(v)$-parent of itself.
 
-The scheme makes use of binary search trees.\todo{Define BST}  For any node $x$ in a binary search tree $T$, $\sigma_T(x)$ is the binary string $b_1,\ldots,b_k$ obtained by from the root-to-$x$ path $x_0,\ldots,x_k$ in $T$ by setting $b_i=0$ or $b_i=1$ depending on whether $x_i$ is the left or right child of $x_{i-1}$, respectively.  Similarly, if $P$ is a path from the root of $T$ to some node $x$, then $\sigma_T(P):=\sigma_T(x)$.
+The scheme makes use of binary search trees.\todo{Define BST}  For any node $x$ in a binary search tree $T$, $\sigma_T(x)$ is the binary string $b_1,\ldots,b_k$ obtained by from the root-to-$x$ path $x_0,\ldots,x_k$ in $T$ by setting $b_i=0$ or $b_i=1$ depending on whether $x_i$ is the left or right child of $x_{i-1}$, respectively. Note that the function $\sigma_T:V(T)\to\{0,1\}^*$ is injective.  We extend this notation to paths so that, if $P$ is a path from the root of $T$ to some node $x$, then $\sigma_T(P):=\sigma_T(x)$.
 
-Each vertex $v$ of $H$ is mapped to a real interval $[a_v,b_v]$ in such a way that $vw\in E(H)$ implies that $[a_v,b_v]\cap [a_w,b_w]\neq\emptyset$.  This mapping is also thin, in the following sense:
+
+The scheme also makes use an interval supergraph of $H$.  Each vertex $v$ of $H$ is mapped to a real interval $[a_v,b_v]$ in such a way that $vw\in E(H)$ implies that $[a_v,b_v]\cap [a_w,b_w]\neq\emptyset$.  This mapping is also thin, in the following sense:
 
 \begin{compactenum}[(P1)]
     \item for any $x\in \R$, $|\{v\in V(H): x\in[a_v,b_w]\}|\in O(t\log n)$.\label{thin}
@@ -68,20 +78,24 @@ For each $y\in\{0,\ldots,n+1\}$, let $L_y:=\{v\in V(H): (v,y)\in V(G)\}$ and let
     \item For any $v\in L_y$, there exists a path $P_y(v)$ that begins at the root of $T_y$ and contains every node in $X_y(v):=\{x_{y}(w): w\in C_v\}$.\label{clique-path}
 \end{compactenum}
 
-For each $y\in\{1,\ldots,h\}$ and each $v\in L_y$, we define $P_y(v)$ to be the minimum length path in $T_y$ that satisifies \pref{clique-path}, so that $P_y(v)$ begins at the root of $T$ and ends at the node in $X_y(v)$ of maximum $T_y$-depth.
+For each $y\in\{1,\ldots,h\}$ and each $v\in L_y$, we define $P_y(v)$ to be the minimum length path in $T_y$ that satisifies \pref{clique-path}, so that $P_y(v)$ begins at the root of $T$ and ends at the node in $X_y(v)$ of maximum $T_y$-depth. For each $y\in\{1,\ldots,h\}$ and each $x\in V(T_y)$, $d_y(x)$ denote the depth of $x$ in the tree $T_x$.
 
-For each $y\in\{1,\ldots,h\}$ and each node $x$ of $T_y$, let $B_x:=\{v\in S^+_y: x_y(v)=x\}$.  Since $x\in[a_v,b_v]$ for each $v\in B_x$, \pref{thin} implies the following property:
+It is helpful to think of $x_y$ as a function $x_y:S^+_y\to V(T_y)$.  For each $y\in\{1,\ldots,h\}$ and each node $x$ of $T_y$, let $B_x:=\{v\in S^+_y: x_y(v)=x\}=x_y^{-1}(x)$.\todo{Should we use $B_{y,x}$?}  Since $x\in[a_v,b_v]$ for each $v\in B_x$, \pref{thin} implies the following property:
+
 \begin{compactenum}[(P1)]\setcounter{enumi}{2}
-    \item $|B_x|\in O(t\log n)$. \label{small-bags-i}
+    \item For each $y\in\{1,\ldots,h\}$ and each $x\in V(T_y)$, $|B_x|\in O(t\log n)$. \label{small-bags-i}
 \end{compactenum}
-Let $\psi_y:S^+_y\to\{1,\ldots,O(t\log n)\}$ be a colouring of $S^+_y$ such that, for each $x\in V(T)$ and each distinct pair $v,w\in B_x$ $\psi(v)\neq\psi(w)$.
+
+Let $\psi_y:S^+_y\to\{1,\ldots,O(t\log n)\}$ be a colouring of $S^+_y$ such that, for each $x\in V(T)$ and each distinct pair $v,w\in B_x$ $\psi_y(v)\neq\psi_y(w)$.  Such a colouring exists by \pref{small-bags-i} and because $x_y$ is a function so each $v\in S^+_y$ appears in $B_x$ for exactly one $x\in V(T)$.  Note that, for any $v\in S^+_y$, the pair $(x_y(v), \psi_y(v))$ uniquely identifies $v$, i.e, for any $(a,b)$ there is at most one
+$v\in S^+_y$ such $x_y(v)=a$ and $\psi_y(v)=b$.  Since the signature function $\sigma_y$ is injective, this means that $\sigma_y(x_y(v))$ and $\psi_y(v)$ also uniquely identify $v$.
+
 
 The binary search tree sequence $T_1,\ldots,T_h$ is very special because it has two important properties:
 \begin{inparaenum}[(i)]
     \item each tree $T_y$ has height $h(T_y)\le \log|S^+_y|+o(\log n)$ and
-    \item there exists a single function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for any $y\in\{1,\ldots,h-1\}$ and any $x\in V(T_y)\cap V(T_{y+1})$ there exists a bitstring $\mu_y(x)$ of length $o(\log n)$ such that $J(\sigma_{T_y}(x),\mu_y(x))=\sigma_{T_{y+1}}(x)$.
+    \item there exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for any $y\in\{1,\ldots,h-1\}$ and any $x\in V(T_y)\cap V(T_{y+1})$ there exists a bitstring $\mu_y(x)$ of length $o(\log n)$ such that $J(\sigma_{T_y}(x),\mu_y(x))=\sigma_{T_{y+1}}(x)$.
 \end{inparaenum}
-
+The bitstring $\mu_y(x)$ is called a \emph{transition code}.  The existence of the tree sequence $T_1,\ldots,T_h$ and corresponding transition codes is non-trivial and is the primary technical tool used to establish the results in \cite{dujmovic.esperet.ea:adjacency,esperet.joret.ea:sparse}.
 
 
 
@@ -101,7 +115,7 @@ For each vertex $(v,y)$ of $G$, the label $\ell(v,y)$ has these parts:
 
     \item $\sigma_y(P_y(v))$: a bitstring of length at most $h(T_y)$ that encodes the path $P_y(v)$ where a 0 (respectively, 1) indicates a step from the current node to its left (respectively, right) child.
 
-    \item $\nu_y(v)$: a bitstring of length $o(\log n)$.  This bitstring is designed so that, for any node $v\in S^+_y\cap S^+_{y+1}$, it is possible to recover $\sigma_{y+1}(P_{y+1}(v))$ given only $\sigma_y(P_y(v))$ and $\nu_y(v)$.
+    \item $\mu_y(v)$: a bitstring of length $o(\log n)$.  This bitstring is designed so that, for any node $v\in S^+_y\cap S^+_{y+1}$, it is possible to recover $\sigma_{y+1}(P_{y+1}(v))$ given only $\sigma_y(P_y(v))$ and $\mu_y(v)$.
 
     \item $\varphi(v)$: the colour of $v$ in the proper colouring of $H$ (a bitstring of length $\lceil\log(t+1)\rceil$).
 
@@ -126,7 +140,7 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
 
         If $\sigma_y(x_y(p_i(v_2))) \neq \sigma_y(x_y(v_1))$ then $v_1\neq p_i(v_2)$.  Otherwise, $p_i(v_2), v_1 \in B_x$ for some node $x$ of $T_y$ (determined by $\sigma_y(x_y(p_i(v_2))) \neq \sigma_y(x_y(v_1))$).  In this case $v_1=p_i(v_2)$ if and only $\psi_y(v_1)=\psi_y(p_i(v_2))$.  The colour $\psi_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$ and $\psi_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi_y(v_1)=\psi_y(p_{\varphi(v_1)}(v_1))$.
 
-        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(P_y(v_1))$ from $\sigma_{y_1}(P_{y_1}(v_1))$ and $\nu_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
+        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(P_y(v_1))$ from $\sigma_{y_1}(P_{y_1}(v_1))$ and $\mu_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
 
         \item $y:=y_1=y_{2+1}$. This case is symmetric to the previous case with the roles and $1$ and $2$ reverse.
 
@@ -146,6 +160,7 @@ Suppose that, for each $i,j\in\{1,\ldots,k\}$, $\sigma_{i,y}(x_{i,y}(v_0))=\sigm
 Therefore, the universal graph $I_n$ contains $k$ distinct vertices $z_1,\ldots,z_k$ each corresponding to $(v_0,y)$ where $z_i=\ell_i(v_0,y)$ is the node corresponding to $(v_0,y_0)$ in the graph $G_i$.  For each $i\in\{1,\ldots,k\}$, $I_n$ also contains $k$ distinct vertices $z_{i,j}=\ell_i(v_j,y)$.  Since $(v_0,y)$ is adjacent to $(v_i,y)$ for each $i\in\{1,\ldots,k\}$, $z_i$ is adjacent to $z_{i,k}$ and therefore $z_i$ has degree at least $k$. Since this is true for each $i\in\{1,\ldots,k\}$, we conclude that, in this example, $I_n$ has at least $k^2$ edges.  Finally, note that there is no sublinear upper bound on $k$. Indeed, it is conceivable that this situation occurs even with $k=n/2$, yielding a universal graph $I_n$ with $\Omega(n^2)$ edges.
 
 \section{A Sparse Universal Graph}
+\label{modifications}
 
 We now describe how to modify the adjacency labelling scheme of \citet{dujmovic.esperet.ea:adjacency} so that the resulting universal subgraph is sparse.  As discussed above, the main obstacle comes from the fact that some vertex $(v,y)$ can have an $i$-parent $w:=p_i(v)$ such that $x_y(w)$ has $T_y$-depth much greater than $x_y(v)$.  In order to avoid this, we modify the function $x_y:S^+_y\to V(T_y)$ to create a new function $x'_y$ that avoids this. Initially $x'_y(v)=x_y(v)$ for each $v\in S^+_y$, but then modifications are performed by calling the following recursive procedure with the root of $T_y$ as its argument:
 
@@ -213,7 +228,7 @@ For each $y\in\{1,\ldots,h\}$ and each $v\in S^+_y$, we define $X'_y(v)=\{x'_y(w
     \item $\sigma_y(x_y(v))$: note that this is not $\sigma_y(P'_y(v))$, but
     $\sigma_y(x'_y(v))$ can be recovered from $\sigma_y(x_y(v))$ and $d_y(x'_y(p_{\varphi(v)}(v))$. This makes it possible to recover $\sigma_y(P'_y(v))=\sigma_y(x'_y(v))\mathbin{\circ} b_y(v)$ where $b_y(v)$ is defined in (NL8), below.
 
-    \item $\nu'_y(v)$: a bitstring of length $o(\log n)$.  This bitstring is designed so that, for any node $v\in S^+_y\cap S^+_{y+1}$, it is possible to recover $\sigma_{y+1}(x_{y+1}(v))$ given only $\sigma_y(x_y(v))$ and $\nu_y(v)$.\footnote{The \emph{transition code} $\nu'_y(v)$ is defined in \cite[Section~5.3]{dujmovic.esperet.ea:adjacency}.}
+    \item $\mu'_y(v)$: a bitstring of length $o(\log n)$.  This bitstring is designed so that, for any node $v\in S^+_y\cap S^+_{y+1}$, it is possible to recover $\sigma_{y+1}(x_{y+1}(v))$ given only $\sigma_y(x_y(v))$ and $\mu_y(v)$.\footnote{The \emph{transition code} $\mu'_y(v)$ is defined in \cite[Section~5.3]{dujmovic.esperet.ea:adjacency}.}
 
     \item $\varphi(v)$: the colour of $v$ in the proper colouring of $H$ (a bitstring of length $\lceil\log(t+1)\rceil$).
 
@@ -238,7 +253,7 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
 
         If $\sigma_y(x'_y(p_i(v_2))) \neq \sigma_y(x'_y(v_1))$ then $v_1\neq p_i(v_2)$.  Otherwise, $p_i(v_2), v_1 \in B'_x$ for some node $x$ of $T_y$ (determined by $\sigma_y(x'_y(p_i(v_2))) = \sigma_y(x'_y(v_1))$).  In this case $v_1=p_i(v_2)$ if and only $\psi'_y(v_1)=\psi'_y(p_i(v_2))$.  The colour $\psi'_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$ and $\psi'_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi'_y(v_1)=\psi'_y(p_{\varphi(v_1)}(v_1))$.
 
-        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(x_y(v_1))$ from $\sigma_{y_1}(x_{y_1}(v_1))$ and $\nu'_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
+        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(x_y(v_1))$ from $\sigma_{y_1}(x_{y_1}(v_1))$ and $\mu'_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
 
         \item $y:=y_1=y_{2+1}$. This case is symmetric to the previous case with the roles and $1$ and $2$ reverse.
 
@@ -284,7 +299,7 @@ In this analysis, it will be helpful to think of each label $\ell_G(v,y')$ in th
     Suppose, therefore, that $v_1\neq v_2$ so that $v_1v_2\in E(H)$.  Recall the definition of $S^+_y$, which implies that $v_1,v_2\in S^+_y\cap S^+_{y+1}$.  Since $v_1v_2\in E(H)$, one of $v_1$ or $v_2$ is an $H$-parent of the other. Since $(v_2,y+1)\in V(G)$, $v_2\in S^+_y$ so $x_y(v_2)$ is defined. By \pref{clique-path}, one of $x_2':=\sigma_y(x_y(v_2))$ or $x_1=\sigma_y(x_y(v_1))$ is a prefix of the other.  Without loss of generality, suppose $x_2'$ is a prefix of $x_1$ and direct the edge $\ell_1\ell_2$ away from $\ell_1$.
 
     As in the previous proof, the number of choices for $x_2'$ is $O(\log n)=n^{o(1)}$.
-    Now, there exists a binary string $\nu'_y(v_2)$ of length $o(\log n)$ such that $J(x_2',\nu'_y(v_2))=\sigma_{y+1}(x_{y+1}(v))=x_2$.  For a fixed $x_2'$, the number of choices of $\nu'_y(v_2)$ is $2^{o(\log n)}=n^{o(1)}$ and, since $J$ is a function, the number of choices for $x_2$ is at most $n^{o(1)}$.  Therefore, for fixed $(x_1,y_1,z_1)$, the number of possible choices for $(x_2,y_2,z_2)$ that result in an edge directed away from $(x_1,y_1,z_1)$ is at most $n^{o(1)}$.  Therefore, the total number of edges in $U_n$ of the form form $(x_1,y_1,z_1)(x_2,y_2,z_2)$ with $y_1\neq y_2$ is at most $|V(U_n)|\cdot n^{o(1)} = n^{1+o(1)}$.
+    Now, there exists a binary string $\mu'_y(v_2)$ of length $o(\log n)$ such that $J(x_2',\mu'_y(v_2))=\sigma_{y+1}(x_{y+1}(v))=x_2$.  For a fixed $x_2'$, the number of choices of $\mu'_y(v_2)$ is $2^{o(\log n)}=n^{o(1)}$ and, since $J$ is a function, the number of choices for $x_2$ is at most $n^{o(1)}$.  Therefore, for fixed $(x_1,y_1,z_1)$, the number of possible choices for $(x_2,y_2,z_2)$ that result in an edge directed away from $(x_1,y_1,z_1)$ is at most $n^{o(1)}$.  Therefore, the total number of edges in $U_n$ of the form form $(x_1,y_1,z_1)(x_2,y_2,z_2)$ with $y_1\neq y_2$ is at most $|V(U_n)|\cdot n^{o(1)} = n^{1+o(1)}$.
 \end{proof}
 
 \cref{flat-edges,vertical-edges} immediately imply our main theorem:
@@ -294,8 +309,9 @@ In this analysis, it will be helpful to think of each label $\ell_G(v,y')$ in th
 \end{theorem}
 
 \section{Conclusions}
+\label{summary}
 
-A more careful handling of $n^{o(1)}$ factors in our proofs gives an upper bound of $n\cdot 2^{O(\sqrt{\log n\log\log n})}$ on the number of edges in $U_n$.  The bottleneck in the analysis is the value $\lambda$ which represents the tradeoff between the lengths of the transition codes $\nu'$ and the excess height of trees $T_1,\ldots,T_h$.  In particular, the optimal tradeoff is obtained when $\nu'_y(v)\in O(\sqrt{\log n\log\log n})$ and $h(T_y)\le \log |S^+_y| + O(\sqrt{\log n\log\log n})$.
+A more careful handling of $n^{o(1)}$ factors in our proofs gives an upper bound of $n\cdot 2^{O(\sqrt{\log n\log\log n})}$ on the number of edges in $U_n$.  The bottleneck in the analysis is the value $\lambda$ which represents the tradeoff between the lengths of the transition codes $\mu'$ and the excess height of trees $T_1,\ldots,T_h$.  In particular, the optimal tradeoff is obtained when $\mu'_y(v)\in O(\sqrt{\log n\log\log n})$ and $h(T_y)\le \log |S^+_y| + O(\sqrt{\log n\log\log n})$.
 
 We remark that our proof includes within it a labelling scheme for graphs of treewidth at most $t$.  Analyzing this labelling scheme separately shows that it gives rise to a graph $H_n$ that has $n(\log n)^{O(t)}$ edges and contains each $n$-vertex subgraph of treewidth at most $t$ as an induced subgraph.
 
