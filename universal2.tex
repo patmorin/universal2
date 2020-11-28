@@ -99,8 +99,6 @@ The binary search tree sequence $T_1,\ldots,T_h$ is very special because it has 
 \end{compactenum}
 The bitstring $\mu_y(x)$ is called a \emph{transition code}.  The existence of the tree sequence $T_1,\ldots,T_h$ and corresponding transition codes is non-trivial and is the primary technical tool used to establish the results in \cite{dujmovic.esperet.ea:adjacency,esperet.joret.ea:sparse}.
 
-
-
 \subsection{The Labels}
 \label{labels-i}
 
@@ -139,8 +137,11 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
     \begin{enumerate}[(a)]
         \item $y:=y_1=y_2$.  For each $i\in\{1,\ldots,t+1\}$, determine if $v_1=p_i(v_2)$ (or \textit{vice-versa}) and, if so, use $a_y(v_2)$ (or $a_y(v_1)$, respectively) to determine if $(v_1,y)$ and $(v_2,y)$ are adjacent in $G$. Specifically, if $v_1=p_i(v_2)$ then one of the bits in $a_y(v_2)$ indicates whether or $(v_1,y_1)$ and $(v_2,y_1)$ are adjacent in $G$. If $v_1\neq p_i(v_2)$ and $v_2\neq p_i(v_1)$ for every $i\in\{1,\ldots,h\}$, then $v_1v_2\not\in E(H)$ and hence $(v_1,y)$ and $(v_2,y)$ are not adjacent in $G\subseteq H\boxtimes P$.
 
-        By \pref{unique-match}, testing if $v_1=p_i(v_2)$, is equivalent to testing if $\sigma_y(x_y(p_i(v_2)))=\sigma_y(x_y(v_1))$ and $\psi_y(v_2)=\psi_y(v_1)$.  To see that $\ell(v_1,y_1)$ and $\ell(v_2,y)$ contain enough information to do this test, first recover $\sigma_y(x_y(p_i(v_2)))$ from $\sigma_y(P_y(v))$ and $d_y(x_y(p_i(v)))$.  Next, recover $d_y(x_y(v_1)):=d_y(x_y(p_{\varphi(v_1)}(v_1)))$ and then  $\sigma_y(x_y(v_1))$ from $\sigma_y(P_y(v_1))$ and $d_y(x_y(v_1))$. The colour $\psi_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$ and $\psi_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi_y(v_1)=\psi_y(p_{\varphi(v_1)}(v_1))$.
-
+        By \pref{unique-match}, testing if $v_1=p_i(v_2)$, is equivalent to testing if $\sigma_y(x_y(v_1))=\sigma_y(x_y(p_i(v_2)))$ and $\psi_y(v_1)=\psi_y(p_i(v_2))$. We now show that $\ell(v_1,y_1)$ and $\ell(v_2,y)$ contain enough information to perform this test.
+        \begin{compactitem}
+            \item We can recover $d_y(x_y(v_1))=d_y(x_y(p_{\varphi(v_1)}(v_1)))$ and using this, recover $\sigma_y(x_y(v_1))$ from $\sigma_y(P_y(v_1))$ and $d_y(x_y(v_1))$.  Next, we can recover $\sigma_y(x_y(p_i(v_2)))$ from $\sigma_y(P_y(v))$ and $d_y(x_y(p_i(v)))$. This makes it possible to test if $\sigma_y(x_y(v_1))=\sigma_y(x_y(p_i(v_2)))$.
+            \item  The colour $\psi_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi_y(v_1)=\psi_y(p_{\varphi(v_1)}(v_1))$.  The colour $\psi_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$.  This makes it possible to test if $\psi_y(v_1)=\psi_y(p_i(v_2))$.
+        \end{compactitem}
         \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(P_y(v_1))$ from $\sigma_{y_1}(P_{y_1}(v_1))$ and $\mu_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
 
         \item $y:=y_1=y_{2+1}$. This case is symmetric to the previous case with the roles and $1$ and $2$ reverse.
@@ -152,13 +153,23 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
 \subsection{Edge Density of the Universal Graph}
 \label{density-lower-bound}
 
-We now explain why the universal graph $I_n$ defined by the preceding labelling scheme is dense.  The main issue is that the definition of $P_y(v)$ as the path in $T_y$ that contains every node in $X_y(v):=\{x_y(w):w\in C_v\}$.  The problem comes from the fact that there can be nodes in $X_y(v)$ that have much greater depth than $x_y(v)$.  This ultimately leads to a large complete bipartite graph with sides $L$ and $R$ in which the elements of $L$ all correspond to a single vertex $(v,y)$ of $H\boxtimes P$.
+We now explain why the universal graph $I_n$ defined by the preceding labelling scheme is not sparse.  The main issue is the definition of $P_y(v)$ as the path in $T_y$ that contains every node in $X_y(v):=\{x_y(w):w\in C_v\}$.  The problem comes from the fact that there can be nodes in $X_y(v)$ that have much greater $T_y$-depth than $x_y(v)$.  This ultimately leads to a large complete bipartite graph with sides $L$ and $R$ in which the elements of $L$ all correspond to a single vertex $(v,y)$ of $H\boxtimes P$.
 
 Consider a set of subgraphs $G_1,\ldots,G_k$ of $H\boxtimes P$ that each contain the vertices $(v_0,y),\ldots,(v_k,y)$ and the edges $(v_0,y)(v_i,y)$ for each $i\in\{1,\ldots,k\}$.  Each of these graphs has a labelling scheme in which the vertices of $G_i$ are labelled by a function $\ell_i:V(G_i)\to\{0,1\}^{(1+o(1))\log n}$.  We add an additional subscript, $i$, to all of our notations so that, for example $\sigma_{i,y}(P_{i,y}(v))$ is the part of the label corresponding to $\sigma_y(P_y(v))$ in the labelling $\ell_i$ for $G_i$.
 
 Suppose that, for each $i,j\in\{1,\ldots,k\}$, $\sigma_{i,y}(x_{i,y}(v_0))=\sigma_{j,y}(x_{j,y}(v_0))$ but that $\sigma_{i,y}(P_{i,y}(v_0))\neq\sigma_{j,y}(P_{j,y}(v_0))$.  This just means that, the path from the root is $T_{i,y}$ to $x_{i,y}(v_0)$ is the same for each $i\in\{1,\ldots,k\}$, but the path from $x_{i,y}(v_0)$ to the deepest node in $X_{i,y}$ is different for each $i\in\{1,\ldots,k\}$.  There is nothing about the definition of the labelling scheme that rules out this possibility.  Indeed, it could be that $x_{i,y}(v_0)$ is the root of $T_{i,y}$ for each $i\in\{1,\ldots,k\}$, in which case there is no apriori reason to believe that, for distinct $i,j\in\{1,\ldots,k\}$ that $\sigma_{i,y}(P_{i,y}(v_j))=\sigma_{i,y}(P_{i,y}(v_j))$.  In fact, this seems unlikely.
 
 Therefore, the universal graph $I_n$ contains $k$ distinct vertices $z_1,\ldots,z_k$ each corresponding to $(v_0,y)$ where $z_i=\ell_i(v_0,y)$ is the node corresponding to $(v_0,y_0)$ in the graph $G_i$.  For each $i\in\{1,\ldots,k\}$, $I_n$ also contains $k$ distinct vertices $z_{i,j}=\ell_i(v_j,y)$.  Since $(v_0,y)$ is adjacent to $(v_i,y)$ for each $i\in\{1,\ldots,k\}$, $z_i$ is adjacent to $z_{i,k}$ and therefore $z_i$ has degree at least $k$. Since this is true for each $i\in\{1,\ldots,k\}$, we conclude that, in this example, $I_n$ has at least $k^2$ edges.  Finally, note that there is no sublinear upper bound on $k$. Indeed, it is conceivable that this situation occurs even with $k=n/2$, yielding a universal graph $I_n$ with $\Omega(n^2)$ edges.
+
+\todo[inline]{The preceding example uses a high-degree vertex $v_0$, but the same problem exists if the graph has bounded degree (in fact, even if the graph is a path).  I think the example in \cref{bad-example} might be the most compelling, though since, for that one, it looks like any easy fix would be hack that doesn't generalize.}
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=.5\textwidth]{figs/bad-example}
+    \end{center}
+    \caption{A better bad example}
+    \label{bad-example}
+\end{figure}
 
 \section{A Sparse Universal Graph}
 \label{modifications}
@@ -250,9 +261,11 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
     \begin{enumerate}[(a)]
         \item $y:=y_1=y_2$.  For each $i\in\{1,\ldots,t+1\}$, determine if $v_1=p_i(v_2)$ (or \textit{vice-versa}) and, if so, use $a_y(v_2)$ (or $a_y(v_1)$, respectively) to determine if $(v_1,y)$ and $(v_2,y)$ are adjacent in $G$. Specifically, if $v_1=p_i(v_2)$ then one of the bits in $a_y(v_2)$ indicates whether or $(v_1,y_1)$ and $(v_2,y_1)$ are adjacent in $G$. If $v_1\neq p_i(v_2)$ and $v_2\neq p_i(v_1)$ for every $i\in\{1,\ldots,h\}$, then $v_1v_2\not\in E(H)$ and hence $(v_1,y)$ and $(v_2,y)$ are not adjacent in $G\subseteq H\boxtimes P$.
 
-        By \pref{unique-match}, testing if $v_1=p_i(v_2)$, is equivalent to testing if $\sigma_y(x'_y(p_i(v_2)))=\sigma_y(x'_y(v_1))$ and $\psi'_y(v_2)=\psi'_y(v_1)$.  To see that $\ell(v_1,y_1)$ and $\ell(v_2,y)$ contain enough information to do this test, first recover
-        $d_y(x'_y(v_1)):=d_y(x'_y(p_{\varphi(v_1)}(v_1)))$ and then  $\sigma_y(x'_y(v_1))$ from $\sigma_y(x_y(v_1))$ and $d_y(x'_y(v_1))$.
-        Next recover $\sigma_y(x'_y(p_i(v_2)))$ from $\sigma_y(P'_y(v_2))$ and $d_y(x'_y(p_i(v)))$.   The colour $\psi_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$ and $\psi_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi_y(v_1)=\psi_y(p_{\varphi(v_1)}(v_1))$.\todo{Double check}
+        By \pref{unique-match}, testing if $v_1=p_i(v_2)$, is equivalent to testing if $\sigma_y(x'_y(v_1))=\sigma_y(x'_y(p_i(v_2)))$ and $\psi'_y(v_1)=\psi'_y(p_i(v_2))$. We now show that $\ell(v_1,y_1)$ and $\ell(v_2,y)$ contain enough information to perform this test.
+        \begin{compactitem}
+            \item We can recover $d_y(x'_y(v_1))=d_y(x'_y(p_{\varphi(v_1)}(v_1)))$ and using this, recover $\sigma_y(x'_y(v_1))$ from $\sigma_y(x_y(v_1))$ and $d_y(x'_y(v_1))$.  Next, we can recover $\sigma_y(x'_y(p_i(v_2)))$ from $\sigma_y(P'_y(v))$ and $d_y(x'_y(p_i(v)))$. This makes it possible to test if $\sigma_y(x'_y(v_1))=\sigma_y(x'_y(p_i(v_2)))$.
+            \item  The colour $\psi'_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi'_y(v_1)=\psi'_y(p_{\varphi(v_1)}(v_1))$.  The colour $\psi'_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$.  This makes it possible to test if $\psi'_y(v_1)=\psi'_y(p_i(v_2))$.
+        \end{compactitem}
 
         \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(x_y(v_1))$ from $\sigma_{y_1}(x_{y_1}(v_1))$ and $\mu'_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
 
