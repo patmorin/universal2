@@ -161,15 +161,15 @@ Suppose that, for each $i,j\in\{1,\ldots,k\}$, $\sigma_{i,y}(x_{i,y}(v_0))=\sigm
 
 Therefore, the universal graph $I_n$ contains $k$ distinct vertices $z_1,\ldots,z_k$ each corresponding to $(v_0,y)$ where $z_i=\ell_i(v_0,y)$ is the node corresponding to $(v_0,y_0)$ in the graph $G_i$.  For each $i\in\{1,\ldots,k\}$, $I_n$ also contains $k$ distinct vertices $z_{i,j}=\ell_i(v_j,y)$.  Since $(v_0,y)$ is adjacent to $(v_i,y)$ for each $i\in\{1,\ldots,k\}$, $z_i$ is adjacent to $z_{i,k}$ and therefore $z_i$ has degree at least $k$. Since this is true for each $i\in\{1,\ldots,k\}$, we conclude that, in this example, $I_n$ has at least $k^2$ edges.  Finally, note that there is no sublinear upper bound on $k$. Indeed, it is conceivable that this situation occurs even with $k=n/2$, yielding a universal graph $I_n$ with $\Omega(n^2)$ edges.
 
-\todo[inline]{The preceding example uses a high-degree vertex $v_0$, but the same problem exists if the graph has bounded degree (in fact, even if the graph is a path).  I think the example in \cref{bad-example} might be the most compelling, though since, for that one, it looks like any easy fix would be hack that doesn't generalize.}
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=.5\textwidth]{figs/bad-example}
-    \end{center}
-    \caption{A better bad example}
-    \label{bad-example}
-\end{figure}
+% \todo[inline]{The preceding example uses a high-degree vertex $v_0$, but the same problem exists if the graph has bounded degree (in fact, even if the graph is a path).  I think the example in \cref{bad-example} might be the most compelling, though since, for that one, it looks like any easy fix would be hack that doesn't generalize.}
+%
+% \begin{figure}
+%     \begin{center}
+%         \includegraphics[width=.5\textwidth]{figs/bad-example}
+%     \end{center}
+%     \caption{A better bad example}
+%     \label{bad-example}
+% \end{figure}
 
 \section{A Sparse Universal Graph}
 \label{modifications}
