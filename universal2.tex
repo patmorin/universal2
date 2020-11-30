@@ -53,7 +53,7 @@ The remainder of this paper is organized as follows. In \cref{review} we review 
 \section{Review of Adjacency Labelling}
 \label{review}
 
-We now summarize review the most relevant aspects of the adjacency labelling scheme of \citet{dujmovic.esperet.ea:adjacency}.  For any integer $t\ge 1$, let $\mathcal{G}_t$ the set of graphs that contains, for every $t$-tree $H$ and every path $P$, every subgraph of $H\boxtimes P$.  The labelling scheme of \citet{dujmovic.esperet.ea:adjacency} works any $n$-vertex member of $\mathcal{G}_t$ for any constant $t$.  In particular, it works for any $n$-vertex planar graph because $\mathcal{G}_8$ contains every planar graph \cite{X}.
+We now summarize review the most relevant aspects of the adjacency labelling scheme of \citet{dujmovic.esperet.ea:adjacency}.  For any integer $t\ge 1$, let $\mathcal{G}_t$ the set of graphs that contains, for every $t$-tree $H$ and every path $P$, every subgraph of $H\boxtimes P$.  The labelling scheme of \citet{dujmovic.esperet.ea:adjacency} works any $n$-vertex member of $\mathcal{G}_t$ for any constant $t$.  In particular, it works for any $n$-vertex planar graph because $\mathcal{G}_8$ contains every planar graph \cite[Theorem~36]{dujmovic.joret.ea:planar}.
 
 We now describe how the labelling scheme works for some $n$-vertex member $G$ of $\mathcal{G}_t$, so $G$ is a subgraph of $H\boxtimes P$ for some $t$-tree $H$ and some path $P$.  Without loss of generality, we may assume that the vertices of $P$ are the integers $1,\ldots,h$ in the order they occur on the path $P$ and that, for each $y\in\{1,\ldots,h\}$ there exists at least one $v\in V(H)$ such that $(v,y)\in V(G)$.
 
@@ -344,11 +344,13 @@ As in \cite{esperet.joret.ea:sparse}, we distinguish between two kinds of edges 
     Now, there exists a binary string $\mu'_y(v_2)$ of length $o(\log n)$ such that $J(x_2',\mu'_y(v_2))=\sigma_{y+1}(x_{y+1}(v))=x_2$.  For a fixed $x_2'$, the number of choices of $\mu'_y(v_2)$ is $2^{o(\log n)}=n^{o(1)}$ and, since $J$ is a function, the number of choices for $x_2$ is at most $n^{o(1)}$.  Therefore, for fixed $(x_1,y_1,z_1)$, the number of choices for $(x_2,y_2,z_2)$ that result in a Type~2 edge directed from $(x_1,y_1,z_1)$ to $(x_2,y_2,z_2)$ is at most $n^{o(1)}$.  Therefore, the total number of Type~2 edges is at most $|V(U_n)|\cdot n^{o(1)} = n^{1+o(1)}$.
 \end{proof}
 
-\cref{flat-edges,vertical-edges} immediately imply our main theorem:
+\Cref{flat-edges,vertical-edges} immediately imply our main theorem:
 
-\begin{theorem}
+\begin{theorem}\label{main}
     For each fixed integer $t\ge 1$ and each $n\in \N$ there exists a graph $U_n$ with $n^{1+o(1)}$ vertices and edges such that, for each $n$-vertex graph $G\in \mathcal{G}_t$, $U_n$ contains an induced subgraph isomorphic to $G$.
 \end{theorem}
+
+\Cref{main-planar} follows from \cref{main} since every planar graph $G$ is in $\mathcal{G}_8$ \cite[Theorem~36]{dujmovic.joret.ea:planar}.
 
 \section{Conclusions}
 \label{summary}
