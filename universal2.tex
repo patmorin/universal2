@@ -11,7 +11,7 @@
 \setlength{\parskip}{1ex}
 
 \newcommand{\pref}[1]{(P\ref{#1})}
-\newcommand{\psref}[1]{(P\ref{#1}$^{\star}$)}
+\newcommand{\psref}[1]{(P\ref{#1}$'$)}
 
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\N}{\mathbb{N}}
@@ -53,11 +53,30 @@ The remainder of this paper is organized as follows. In \cref{review} we review 
 \section{Review of Adjacency Labelling}
 \label{review}
 
-We now summarize review the most relevant aspects of the adjacency labelling scheme of \citet{dujmovic.esperet.ea:adjacency}.  For any integer $t\ge 1$, let $\mathcal{G}_t$ the set of graphs that contains, for every $t$-tree $H$ and every path $P$, every subgraph of $H\boxtimes P$.  The labelling scheme of \citet{dujmovic.esperet.ea:adjacency} works any $n$-vertex member of $\mathcal{G}_t$ for any constant $t$.  In particular, it works for any $n$-vertex planar graph because $\mathcal{G}_8$ contains every planar graph \cite[Theorem~36]{dujmovic.joret.ea:planar}.
+We now summarize review the most relevant aspects of the adjacency labelling scheme of \citet{dujmovic.esperet.ea:adjacency}.  This labelling scheme works in a much more general setting than planar graphs, which we now explain.
+
+A \emph{$t$-tree} $H$ is a graph that is either a clique on $t+1$ vertices or contains a vertex $v$ of degree $t$ that is part of a $(t+1)$-clique and such that $H-\{v\}$ is a $t$-tree.  This definition that every $t$-tree $H$ has an ordering $v_1,\ldots,v_n$ of its vertices such that $v_1,\ldots,v_t$ form a clique and each, for each $i\in\{1,\ldots,n\}$ $v_i$ is adjacent to exactly $\min\{i-1,t\}$ vertices among $v_1,\ldots,v_{i-1}$ and these vertices form a $t$-clique, called the \emph{parent clique} of $v$.  This definition of $t$-trees implies that every $t$-tree $H$ has a property colouring $\varphi:V(H)\to\{1,\ldots,t+1\}$ using $t+1$ colours.
+
+A \emph{tree decomposition} of a graph $G$ is a sequence $(A_x:x\in V(T))$ of subsets of $V(G)$ called \emph{bags} indexed by the nodes of a tree $T$ such that
+\begin{inparaenum}[(i)]
+    \item for each edge $vw\in E(G)$, there exists some $x\in V(T)$ with $\{v,w\}\subseteq A_x$.
+    \item for each $v\in V(G)$, the subgraph $T[\{x:v\in A_x\}]$ is connected.
+\end{inparaenum}
+The \emph{width} of a tree decomposition is the size of its largest bag, minus one. The \emph{treewidth} of a graph $G$ is the width of a minimum-width tree decomposition of $G$.  Every graph of treewidth at most $t$ is a subgraph of some $t$-tree.
+
+The \emph{strong product} $G_1\boxtimes G_2$ of two graphs $G_1$ and $G_2$ is the graph whose vertex set is the Cartesian product $V(G_1\boxtimes G_2):=V(G_1)\times V(G_2)$ and whose edge set contains an edge $(x_1,y_1)(x_2,y_2)$ if and only if
+\begin{inparaenum}[(i)]
+    \item $x_1=x_2$ and $y_1y_2\in E(G_2)$;
+    \item $x_1x_2\in E(G_1)$ and $y_1=y_2$; or
+    \item $x_1x_2\in E(G_1)$ and $y_1y_2\in E(G_2)$.
+\end{inparaenum}
+
+We can now describe the main result of \citet{dujmovic.esperet.ea:adjacency}.
+For any integer $t\ge 1$, let $\mathcal{G}_t$ the set of graphs that contains, for every $t$-tree $H$ and every path $P$, every subgraph of $H\boxtimes P$.  The labelling scheme of \citet{dujmovic.esperet.ea:adjacency} works any $n$-vertex member of $\mathcal{G}_t$ for any constant $t$.  In particular, it works for any $n$-vertex planar graph because $\mathcal{G}_8$ contains every planar graph \cite[Theorem~36]{dujmovic.joret.ea:planar}.
 
 We now describe how the labelling scheme works for some $n$-vertex member $G$ of $\mathcal{G}_t$, so $G$ is a subgraph of $H\boxtimes P$ for some $t$-tree $H$ and some path $P$.  Without loss of generality, we may assume that the vertices of $P$ are the integers $1,\ldots,h$ in the order they occur on the path $P$ and that, for each $y\in\{1,\ldots,h\}$ there exists at least one $v\in V(H)$ such that $(v,y)\in V(G)$.
 
-Without loss of generality, we may assume that $H$ has at least $t+1$ vertices. Fix a tree decomposition $(B_{y,x}:x\in V(T))$ of $H$ in which each bag has size exactly $t+1$ and in which no two bags have the same contents.  Root $T$ at an arbitrary node $r$ and, for each vertex $v$ of $H$, let $C_v:=B_{y,x}$ where $x$ is the minimum-depth node of $T$ such that $v\in B_{y,x}$.  The vertex set $C_v$ has size $t+1$, includes $v$ and is called the \emph{family clique} of $v$.
+Without loss of generality, we may assume that $H$ has at least $t+1$ vertices. Fix a tree decomposition $(A_{x}:x\in V(T))$ of $H$ in which each bag has size exactly $t+1$ and in which no two bags have the same contents.  Root $T$ at an arbitrary node $r$ and, for each vertex $v$ of $H$, let $C_v:=A_{x}$ where $x$ is the minimum-depth node of $T$ such that $v\in B_{x}$.  The vertex set $C_v$ has size $t+1$, includes $v$, and is called the \emph{family clique} of $v$.
 
 Each vertex $w\in C_v$ is called an \emph{$H$-parent} of $v$.  Fix a proper colouring $\varphi:H\to\{1,\ldots,t+1\}$.  For any vertex $v$ of $H$, the \emph{$i$-parent} $p_i(v)$ of $v$ is the unique node $w\in C_v$ with $\varphi(w)=i$.  Note that $v$ is and $H$-parent of itself and, specifically, $v$ is the $\varphi(v)$-parent of itself.
 
@@ -72,7 +91,7 @@ The scheme also makes use an interval supergraph of $H$.  Each vertex $v$ of $H$
 
 For each $y\in\{0,\ldots,n+1\}$, let $L_y:=\{v\in V(H): (v,y)\in V(G)\}$ and let $S_y:=\bigcup_{v\in L_y}C_v$.  The labelling scheme first finds sets $S^+_1,\ldots,S^+_h$ of total size $O(n)$ such that $S^+_y\supseteq S_{y-1}\cup S_y\cup S_{y+1}$.\footnote{The original labelling scheme only uses $S^+_y\supseteq S_{y-1}\cup S_y$ but it is convenient for us to include $S_{y+1}$ as well and this change does not invalidate anything in the original scheme.}
 
-\citet{dujmovic.esperet.ea:adjacency} define a sequence of binary search trees $T_1,\ldots,T_h$ such that, for each $y\in\{1,\ldots,h\}$ and each $v\in S^+_y$, $T_y$ contains at least one value $x\in [a_v,b_v]$.  This leads to the following crucial definition: For each $v\in S^+_y$, $x_{y}(v)$ is the minimum-depth node $x$ of $T_y$ such that $x\in [a_v,b_v]$. Note that $x_y(v)$ is well-defined since $T_y$ contains at least one node $x\in[a_v,b_v]$.   The following property follows from these definitions and Helly's Theorem:
+\citet{dujmovic.esperet.ea:adjacency} define a sequence of binary search trees $T_1,\ldots,T_h$ such that, for each $y\in\{1,\ldots,h\}$ and each $v\in S^+_y$, $T_y$ contains at least one value $x\in [a_v,b_v]$.  This leads to the following very important definition: For each $v\in S^+_y$, $x_{y}(v)$ is the minimum-depth node $x$ of $T_y$ such that $x\in [a_v,b_v]$. Note that $x_y(v)$ is well-defined since $T_y$ contains at least one node $x\in[a_v,b_v]$.   The following property follows from these definitions and Helly's Theorem:
 
 \begin{compactenum}[(P1)]\setcounter{enumi}{1}
     \item For any $v\in L_y$, there exists a path $P_y(v)$ that begins at the root of $T_y$ and contains every node in $X_y(v):=\{x_{y}(w): w\in C_v\}$.\label{clique-path}
@@ -95,7 +114,7 @@ Let $\psi_y:S^+_y\to\{1,\ldots,O(t\log n)\}$ be a colouring of $S^+_y$ such that
 The binary search tree sequence $T_1,\ldots,T_h$ is very special because it has two important properties:
 \begin{compactenum}[(P1)]\setcounter{enumi}{4}
     \item For each $y\in\{1,\ldots,h\}$, $h(T_y)\le \log|S^+_y|+o(\log n)$.
-    \item There exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for each $y\in\{1,\ldots,h-1\}$ and each $x\in V(T_y)\cap V(T_{y+1})$ there exists a bitstring $\mu_y(x)$ of length $o(\log n)$ such that $J(\sigma_{T_y}(x),\mu_y(x))=\sigma_{T_{y+1}}(x)$.
+    \item There exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for each $y\in\{1,\ldots,h-1\}$ and each $x\in V(T_y)\cap V(T_{y+1})$ there exists a bitstring $\mu_y(x)$ of length $o(\log n)$ such that $J(\sigma_{T_y}(x),\mu_y(x))=\sigma_{T_{y+1}}(x)$. \label{transition-code}
 \end{compactenum}
 The bitstring $\mu_y(x)$ is called a \emph{transition code}.  The existence of the tree sequence $T_1,\ldots,T_h$ and corresponding transition codes is non-trivial and is the primary technical tool used to establish the results in \cite{dujmovic.esperet.ea:adjacency,esperet.joret.ea:sparse}.
 
@@ -127,7 +146,7 @@ For each vertex $(v,y)$ of $G$, the label $\ell(v,y)$ has these parts:
     \item $a_y(v)$: A bitstring of length $3(t+1)$ that indicates, for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ whether $G$ contains the edge with endpoints $(v,y)$ and $(p_i(v),y+b)$.
 \end{compactenum}
 
-The label (L1) requires some further explanation. $\alpha(y)$ consists of two parts: $(\alpha_1(y))$ is a bitstring of length at most $\log n-\log |S^+_y|$ and $\alpha_2(y)$ is a bitstring of length at most $\log\log n+O(1)$.  These strings are designed so that there is a universal function $N$ such that $N(\alpha(y_1))=\alpha_1(y_2)$ if and only if $y_2=y_1+1$.  Clearly this make it possible to distinguish between cases~(a)--(d).  It also has the following implication:  For any fixed $\alpha(y_1)$ there are at most $2^{\log \log n+O(1)}=O(\log n)$ values of $\alpha(y_2)$ that fall into case (b).  Indeed, these are $D(\alpha(y_1)):=\{N(\alpha(y_1))\mathbin{\circ} s: s\in\{0,1\}^{\log\log n}\}$.
+The label (L1) requires some further explanation. $\alpha(y)$ consists of two parts: $(\alpha_1(y))$ is a bitstring of length at most $\log n-\log |S^+_y|$ and $\alpha_2(y)$ is a bitstring of length at most $\log\log n+O(1)$.  These strings are designed so that there is a universal function $N$ such that $N(\alpha(y_1))=\alpha_1(y_2)$ if and only if $y_2=y_1+1$.  Clearly this make it possible to distinguish between cases~(a)--(d).  It also has the following implication:  For any fixed $\alpha(y_1)$ there are at most $2^{\log \log n+O(1)}=O(\log n)$ values of $\alpha(y_2)$ that fall into case (b).  Indeed, these are $D(\alpha(y_1)):=\{N(\alpha(y_1))\mathbin{\circ} s: s\in\{0,1\}^{\log\log n+O(1)}\}$.
 
 \subsection{Adjacency Testing}
 
@@ -153,7 +172,7 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
 \subsection{Edge Density of the Universal Graph}
 \label{density-lower-bound}
 
-We now explain why the universal graph $I_n$ defined by the preceding labelling scheme is not sparse and show that, without some additional effort, it leads to a universal graph $I_n$ having $\Omega(n^2)$ edges.  The main issue is the definition of $P_y(v)$ as the path in $T_y$ that contains every node in $X_y(v):=\{x_y(w):w\in C_v\}$.  The problem comes from the fact that there can be nodes in $X_y(v)$ that have much greater $T_y$-depth than $x_y(v)$.  This ultimately leads to a large complete bipartite graph with sides $L$ and $R$ in which the elements of $L$ all correspond to a single vertex $(v,y)$ of $H\boxtimes P$.  This problem even occurs when $P$ consists of a single vertex.
+We now explain why the universal graph $I_n$ defined by the preceding labelling scheme is not sparse and show that, without some additional effort, it produces a universal graph $I_n$ having $\Omega(n^2)$ edges.  The main issue is the definition of $P_y(v)$ as the path in $T_y$ that contains every node in $X_y(v):=\{x_y(w):w\in C_v\}$.  The problem comes from the fact that there can be nodes in $X_y(v)$ that have much greater $T_y$-depth than $x_y(v)$.  This ultimately leads to a large complete bipartite graph in $I_n$ with sides $L$ and $R$ in which the elements of $L$ all correspond to a single vertex $(v,y)$ of $H\boxtimes P$.  This problem even occurs when $P$ consists of a single vertex and $H$ is a tree.
 
 Let $n\ge 12$ be an integer multiple of 12. Consider the tree $H$ illustrated in \cref{bad-example} that consists of a path $\beta,u,v,w,\alpha$ and a set of $n-5$ leaves.  One of these leaves, $r$ is adjacent to $w$. Another $n/2-3$ of these leaves are adjacent to $\alpha$, and the remaining $n/2-3$ leaves are adjacent to $\beta$.
 
@@ -186,7 +205,8 @@ Let $P_1$ be a path of length 1.  If we apply the labelling scheme of \citet{duj
 
 The first two levels of $T_1$ are fixed, independent of $i,j$ and each of the four depth-$2$ nodes is the root of a subtree of size $n/12$. In particular, the ``shape'' of $T_{1}$ can be the same for any $i,j\in\{1,\ldots,n/12\}$.  For example, if $n/12=2^k-1$ for some integer $k$, then $T_1$ could be a complete binary tree of height $k+2$.  Suppose that this is the case.  Then $\sigma_1(P_1(u))=\sigma_1(x_1(u))$ depends only on the choice of $j$.  Similarly, $\sigma_1(P_1(v))=\sigma_1(x_1(w))$ depends only on the choice of $i$.
 
-This means that the label $\ell_{i}(v):=\ell_{i,j}(v,1)$ depends only on $i$ and is distinct for each $i\in\{1,\ldots,n/12\}$.  Similarly, the label $\ell_j(u):=\ell_{i,j}(u,1)$ depends only on $j$ and is distinct for each $j\in\{1,\ldots,n/12\}$.  Furthermore $uv$ is an edge of $T_{i,j}$ for each $i,j\in\{1,\ldots,n/12\}$, so $A(\ell_{i}(v),\ell_{j}(u))=1$ for each $i,j\in\{1,\ldots,n/12\}$. Therefore, the universal graph $I_n$ contains a complete bipartite subgraph with parts $L:=\{\ell_{i}(v):i\in\{1,\ldots,n/12\}\}$ and $R:=\{\ell_{j}(u):j\in\{1,\ldots,n/12\}\}$.  Therefore $|E(I_n)|\ge n^2/144$.
+This means that the label $\ell_{i}(v):=\ell_{i,j}(v,1)$ depends only on $i$. Furthermore, for any $i_1\neq i_2$, $\ell_{i_1}(v)\neq\ell_{i_2}(v)$.
+Similarly, the label $\ell_j(u):=\ell_{i,j}(u,1)$ depends only on $j$ and is distinct for each $j\in\{1,\ldots,n/12\}$.  Furthermore $uv$ is an edge of $T_{i,j}$ for each $i,j\in\{1,\ldots,n/12\}$, so $A(\ell_{i}(v),\ell_{j}(u))=1$ for each $i,j\in\{1,\ldots,n/12\}$. Therefore, the universal graph $I_n$ contains a complete bipartite subgraph with parts $L:=\{\ell_{i}(v):i\in\{1,\ldots,n/12\}\}$ and $R:=\{\ell_{j}(u):j\in\{1,\ldots,n/12\}\}$.  Therefore $|E(I_n)|\ge n^2/144$.
 
 
 %
@@ -255,27 +275,27 @@ We now describe how to modify the adjacency labelling scheme of \citet{dujmovic.
 
 Observe that the only modifications to $x'_y$ that occur do so in Line~\ref{changes} and they involve setting $x'_y(w)$ to an ancestor of $x_y(w)$.  Therefore, for any vertex $v\in S^+_y$, $x'_y(v)$ is a $T_y$-ancestor of $x_y(v)$.  This immediately implies that that, after running $\textsc{Fixup}(r)$, the following version of \pref{clique-path} still holds:
 
-\begin{compactenum}[(P1$^\star$)]\setcounter{enumi}{1}
-    \item For any $v\in L_y$, there exists a path $P_y(v)$ that begins at the root of $T_y$ and contains every node in $X'_y(v):=\{x'_{y}(w): w\in C_v\}$.\label{clique-path-ii}
+\begin{compactenum}[(P1$$)]\setcounter{enumi}{1}
+    \item For any $v\in L_y$, there exists a path $P'_y(v)$ of length at most $d_y(x_y(v))+1$ that begins at the root of $T_y$ and contains every node in $X'_y(v):=\{x'_{y}(w): w\in C_v\}$.\label{clique-path-ii}
 \end{compactenum}
 
 % Define $P'_y(v)$ (the $x'$ analogue of $P_y(v)$) as the shortest path that begins at the root of $T_y$ and contains every node in $X'_y(v)$.
 
-It is not the case that $x'_y$ satisfies \pref{small-bags-i}.  Indeed, $B'_{y,x}:=\{v\in S^+_y: x'_y(v)=x\}$ can be much larger than $B_{y,x}$ and, even larger than $O(t\log n)$.  The next lemma shows that the size of $B'_{y,x}$ is still polylogarithmic in $n$.
+It is not the case that $x'_y$ satisfies \pref{small-bags-i}.  Indeed, $B'_{y,x}:=\{v\in S^+_y: x'_y(v)=x\}$ can be much larger than $B_{y,x}$ and, even larger than $O(t\log n)$.  The next lemma shows that, for fixed $t$, the size of $B'_{y,x}$ remains polylogarithmic in $n$.
 
 \begin{lemma}\label{small-bags-ii-lem}
     For each $y\in\{1,\ldots,h\}$ and each node $x$ of $T_y$, $|B'_{y,x}|\in O(t(\log n)^{t+2})$.
 \end{lemma}
 
 \begin{proof}
-    Let $x$ be some node of $T_y$ and suppose that, for some $w\in S^+_y$ $x'_T(w)=x$.  We can trace $w$ back through a path $w_0,w_1,w_2,..,w_d$ in $H$ such that
+    Let $x$ be some node of $T_y$ and suppose that, for some $w\in S^+_y$ $x'_y(w)=x$.  We can trace $w$ back through a path $w_0,w_1,w_2,..,w_d$ in $H$ such that
     \begin{compactenum}[(a)]
         \item $w_0=w$;
         \item $w_{i-1}$ is an $H$-parent of $w_i$ for each $i\in\{1,...,d\}$;
         \item $x'_y(w_{i})$ is the $T_y$-parent of $x'_y(w_{i-1})$ for each $i\in\{1,...,d\}$; and
         \item $x_T(w_d)=x'_T(w_d)$.
     \end{compactenum}
-    In particular $w$ is an $H$-ancestor of $w_d$ and there is a path $w_0,\ldots,w_d$ in $H$ of length at most $d$ between with endpoints $w$ and $w_d$.  In the language of \citet{pilipczuk.siebertz:polynomial} $w_0$ is \emph{$d$-reachable} from $w_d$.  \citet[Lemma~13]{pilipczuk.siebertz:polynomial-arxiv} shows that the number of $d$-reachable $H$-ancestors for any node $v$ in a $t$-tree $H$ is at most $\binom{d+t}{t}$.
+    In particular $w$ is an $H$-ancestor of $w_d$ and there is a path $w_0,\ldots,w_d$ in $H$ of length at most $d$ with endpoints $w$ and $w_d$.  In the language of \citet{pilipczuk.siebertz:polynomial} $w_0$ is \emph{$d$-reachable} from $w_d$.  \citet[Lemma~13]{pilipczuk.siebertz:polynomial-arxiv} shows that the number of $d$-reachable $H$-ancestors of any node $v$ in a $t$-tree $H$ is at most $\binom{d+t}{t}$.
 
     Now, let $x=x_0\ldots,x_k$ be the path from $x=x_0$ to the root $x_k$ of $T_y$. By the preceding argument, for each $v\in B'_{y,x}$ there exists some $d\in\{0,\ldots,k\}$ such that $w$ is a $d$-reachable $H$-ancestor of some node $v\in B_{x_d}$.  It follows that
     \[
@@ -296,8 +316,8 @@ Therefore, by \cref{small-bags-ii-lem}, $x'_y$ satisfies the following weakening
 
 For each $y\in\{1,\ldots,h\}$ and each $v\in S^+_y$, we define $P'_y(v)$ as the shortest path that begins at the root of $T_y$ and contains every node $X'_y(v)$.  Let $\psi'_y:S^+_y\to\{1,\ldots,O(t(\log n)^{t+2})\}$ be a colouring of $S^+_y$ such that, for each $x\in V(T)$ and each distinct pair $v,w\in B'_{y,x}$ $\psi(v)\neq\psi(w)$.  Since $x'_y:S^+_y\to V(T_y)$ is a function and $\sigma_y$ is is injective we have the following variant of \pref{unique-match}:
 
-\begin{compactenum}[(P1$^\star$)]\setcounter{enumi}{3}
-    \item For any $y\in\{1,\ldots,h\}$ and any distinct $v,w\in S^+_h$, $\sigma_y(x'_y(v))\neq \sigma_y(x_y(x)) $ or $\psi'_y(v)\neq\psi'_y(w)$.\label{unique-match-ii}
+\begin{compactenum}[(P1$'$)]\setcounter{enumi}{3}
+    \item For any $y\in\{1,\ldots,h\}$ and any distinct $v,w\in S^+_h$, $\sigma_y(x'_y(v))\neq \sigma_y(x'_y(x)) $ or $\psi'_y(v)\neq\psi'_y(w)$.\label{unique-match-ii}
 \end{compactenum}
 
 \subsection{The New Labels}
@@ -321,7 +341,7 @@ For each vertex $(v,y)$ of $G$, the label $\ell(v,y)$ has these parts:
 
     \item $a_y(v)$: this is unmodified from the original scheme.
 
-    \item $b_y(v)$: A binary string of length at most 1 such that $\sigma_y(P'_y(v))=\sigma_y(x'_y(v))\mathbin{\circ}b_y(v)$.
+    \item $b_{y+b}(v)$ for each $b\in\{-1,0,1\}$: Three binary strings, each of length at most 1 such that $\sigma_{y+b}(P'_{y+b}(v))=\sigma_{y+b}(x'_{y+b}(v))\mathbin{\circ}b_{y+b}(v)$ for each $b\in\{-1,0,1\}$.\todo{stupid notation conflict!}
 \end{compactenum}
 
 \subsection{Adjacency Testing}
@@ -338,7 +358,7 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
             \item  The colour $\psi'_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi'_y(v_1)=\psi'_y(p_{\varphi(v_1)}(v_1))$.  The colour $\psi'_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$.  This makes it possible to test if $\psi'_y(v_1)=\psi'_y(p_i(v_2))$.
         \end{compactitem}
 
-        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(x_y(v_1))$ from $\sigma_{y_1}(x_{y_1}(v_1))$ and $\mu'_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
+        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(x_y(v_1))$ from $\sigma_{y_1}(x_{y_1}(v_1))$ and $\mu'_{y_1}(v_1)$.  Next, recover $\sigma_y(P'_y(v))=\sigma_y(x_y(v_1))\mathbin{\circ}b_{y_1+1}(v)$. At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
 
         \item $y:=y_1=y_{2+1}$. This case is symmetric to the previous case with the roles and $1$ and $2$ reverse.
 
@@ -349,15 +369,13 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
 
 \subsection{Edge Sparsity of the Universal Graph}
 
-In the preceding sections we have described an adjacency testing function $A$ such that, for any $t$-tree $H$, any path $P$, and any $n$-vertex subgraph $G\subseteq H\boxtimes P$, there exists a labelling $\ell_G:V(G)\to\{0,1\}^{(1+o(1))\log n}$ such that, for any $v,w\in V(G)$, $A(\ell_G(v),\ell_G(w))=1$ if and only if $vw\in E(G)$.
+In the preceding sections we have described an adjacency testing function $A$ such that, for any $n$-vertex $G\in \mathcal{G}_t$, there exists a labelling $\ell_G:V(G)\to\{0,1\}^{(1+o(1))\log n}$ such that, for any $v,w\in V(G)$, $A(\ell_G(v),\ell_G(w))=1$ if and only if $vw\in E(G)$.  We define the induced-universal graph $U_n$ as follows: $V(U_n)$ contains $\ell_G(v,y)$ for each $n$-vertex graph $G\in\mathcal{G}_t$ with $(v,y)\in V(G)$. Similarly, an edge $\ell_1\ell_2$ is in $I_n$ if and only if there exists an $n$-vertex graph $G\in\mathcal{G}_t$ that contains an edge $vw$ such that $\ell_G(v)=\ell_1$ and $\ell_G(w)=\ell_2$.
 
-We now define the induced-universal graph $U_n$ as follows: $V(U_n)$ contains $\ell_G(v,y)$ for each $n$-vertex graph $G$ with $(v,y)\in V(G)$ that is a subgraph of $H\boxtimes P$ for some $t$-tree $H$ and some path $P$.  Similarly, an edge $\ell_1\ell_2$ is in $I_n$ if and only if there exists a $t$-tree $H$, a path $P$, and an $n$-vertex subgraph $G$ of $H\boxtimes P$ that contains an edge $vw$ such that $\ell_G(v)=\ell_1$ and $\ell_G(w)=\ell_2$.
-
-Clearly, $U_n$ has at most $2^{(1+o(1))\log n}=n^{1+o(1)}$ vertices.  We will now show that $U_n$ has $n^{1+o(1)}$ edges.  This analysis mostly follows along the same lines as the analysis of \citet{esperet.joret.ea:sparse} but is, by necessity, a little less modular.\footnote{The modular approach used by \citet{esperet.joret.ea:sparse} to describe a subgraph-universal graph can be ruled out by a simple counting argument.  They describe a subgraph-universal graph for $C_d\boxtimes K_\omega\boxtimes P_n$ for $c,\omega\in\Theta(\log n)$.  However, the subgraph $\overline{G}:=C_{\log n/\log\log n}\boxtimes K_\omega$ has $n$ vertices and $\Theta(n\log^2 n/\log\log n)$ edges.  The graph $\overline{G}$ has at least $2^{\Omega(n\log^2 n/\log\log n)}$ non-isomorphic [TODO: check this non-isomorphic part] $n$-vertex subgraphs so any encoding for subgraphs of $\overline{G}$ must use at least $\Omega(n\log^2/\log\log n)$ bits to encode some subgraphs.  Therefore any labelling scheme for subgraphs of $\overline{G}$ must use labels of length at most $\Omega(\log^2 n/\log\log n)$.  Therefore any induced-universal graph for subgraphs of $\overline{G}$ must have $2^{\Omega(\log^2 n/\log\log n)}=n^{\omega(\log n/\log\log n)}$ vertices.}
-
+% For each $n$-vertex $G\in\mathcal{G}_t$ and each $v\in V(G)$, $|\ell_G(v)|=(1+o(1))\log n$.  Therefore, $U_n$ has at most $2^{(1+o(1))\log n}=n^{1+o(1)}$ vertices.
+We will now show that $U_n$ has $n^{1+o(1)}$ vertices and edges.  This analysis mostly follows along the same lines as the analysis of \citet{esperet.joret.ea:sparse} but is, by necessity, a little less modular.\footnote{The modular approach used by \citet{esperet.joret.ea:sparse} to describe a subgraph-universal graph can be ruled out by a simple counting argument.  They describe a subgraph-universal graph for $C_d\boxtimes K_\omega\boxtimes P_n$ for $c,\omega\in\Theta(\log n)$.  However, the subgraph $\overline{G}:=C_{\log n/\log\log n}\boxtimes K_\omega$ has $n$ vertices and $\Theta(n\log^2 n/\log\log n)$ edges.  The graph $\overline{G}$ has at least $2^{\Omega(n\log^2 n/\log\log n)}$ non-isomorphic [TODO: check this non-isomorphic part] $n$-vertex subgraphs so any encoding for subgraphs of $\overline{G}$ must use at least $\Omega(n\log^2/\log\log n)$ bits to encode some subgraphs.  Therefore any labelling scheme for subgraphs of $\overline{G}$ must use labels of length at most $\Omega(\log^2 n/\log\log n)$.  Therefore any induced-universal graph for subgraphs of $\overline{G}$ must have $2^{\Omega(\log^2 n/\log\log n)}=n^{\omega(\log n/\log\log n)}$ vertices.}
 In this analysis, it will be helpful to think of each label $\ell_G(v,y')$ in the labelling of a graph $G$ as a triple $(x,y,z)$ where $x=\sigma_y(x_y(v))$, $y=\alpha(y')$, and $z$ is the concatenation of the bitstrings (NL3)-(NL8). Of course, since each vertex of $U_n$ is $\ell_G(v,y')$ for some $G$ and some $(v,y')\in V(G)$, we can also treat the vertices of $U_n$ as triples.  Thus, each vertex of $U_n$ is a triple $(x,y,z)$ where $x$, $y$, and $z$ are bitstrings with  $|x|+|y|\le \log n + \lambda$ and $|z|\le \lambda$ where $\lambda\in o(\log n)$.
 
-\begin{lemma}
+\begin{lemma}\label{vertex-count}
     The graph $U_n$ has $n^{1+o(1)}$ vertices.
 \end{lemma}
 
@@ -376,11 +394,11 @@ As in \cite{esperet.joret.ea:sparse}, we distinguish between two kinds of edges 
 \end{lemma}
 
 \begin{proof}
-    Let $(x_1,y,z_1)(x_2,y,z_2)$ be a Type~1 edge of $U_n$ and, for each $i\in\{1,2\}$, let $\ell_i:=(x_i,y,z_i)$ for each $i\in\{1,2\}$.  If the edge $\ell_1\ell_2\in E(U_n)$, then there exists some $t$-tree $H$ some path $P$, some $n$-vertex subgraph $G$ of $H\boxtimes P$, and some edge $(v_1,y)(v_2,y)$ of $G$ such that $\ell_1=\ell_G(v_1,y)$ and $\ell_G(v_2,y)=\ell_2$.
+    Let $(x_1,y,z_1)(x_2,y,z_2)$ be a Type~1 edge of $U_n$ and, for each $i\in\{1,2\}$, let $\ell_i:=(x_i,y,z_i)$.  If the edge $\ell_1\ell_2\in E(U_n)$, then there exists some $t$-tree $H$ some path $P$, some $n$-vertex subgraph $G$ of $H\boxtimes P$, and some edge $(v_1,y)(v_2,y)$ of $G$ such that $\ell_1=\ell_G(v_1,y)$ and $\ell_G(v_2,y)=\ell_2$.
 
-    The existence of the edge $(v_1,y)(v_2,y)$ in $G$ implies the existence of the edge $v_1v_2$ in $H$.  Therefore, $v_1$ is an $H$-parent of $v_2$, or vice-versa. Property~\pref{clique-path-ii} implies that one of $x_1=x_y(\sigma_y(v_1))$ or $x_2=x_y(\sigma_y(v_2))$ is a prefix of the other.  Assume, without loss of generality, that $x_2$ is a prefix of $x_1$ and directed the edge $\ell_1\ell_2$ away from $\ell_1$.  For a fixed $(x_1,y,z_1)$, the number $x_2$ that are a prefix of $x_1$ is most $|x_1|\le\log n+\lambda=n^{o(1)}$. For a fixed $(x_1,y,z_1)$, the number of $(x_2,y,z_2)$ in which $x_2$ is a prefix of $x_1$ is at most $n^{o(1)}\cdot 2^{\lambda}=n^{o(1)}$.
+    The existence of the edge $(v_1,y)(v_2,y)$ in $G$ implies the existence of the edge $v_1v_2$ in $H$.  Therefore, $v_1$ is an $H$-parent of $v_2$, or vice-versa. Property~\pref{clique-path-ii} implies that one of $x_1=\sigma_y(x_y(v_1))$ or $x_2=\sigma_y(x_y(v_2))$ is a prefix of the other.  Assume, without loss of generality, that $x_2$ is a prefix of $x_1$ and direct the edge $\ell_1\ell_2$ away from $\ell_1$.  For a fixed $(x_1,y,z_1)$, the number $x_2$ that are a prefix of $x_1$ is most $|x_1|\le\log n+\lambda=n^{o(1)}$. For a fixed $(x_1,y,z_1)$, the number of $(x_2,y,z_2)$ in which $x_2$ is a prefix of $x_1$ is at most $n^{o(1)}\cdot 2^{\lambda}=n^{o(1)}$.
 
-    Therefore, each vertex $(x_1,y,z_1)$ of $U_n$ has at most $n^{o(1)}$ Type~1 edges directed away from it.  Therefore the number of edges in $U_n$ of the form $(x_1,y,z_1)(x_2,y,z_2)$ in $U_n$ is at most $|V(U_n)|\cdot n^{o(1)}=n^{1+o(1)}$.
+    Therefore, each vertex $(x_1,y,z_1)$ of $U_n$ has at most $n^{o(1)}$ Type~1 edges directed away from it.  Therefore the number of Type~1 edges in $U_n$ is at most $|V(U_n)|\cdot n^{o(1)}=n^{1+o(1)}$, where the upper bound on $|V(U_n)|$ comes from \cref{vertex-count}.
 \end{proof}
 
 \begin{lemma}\label{vertical-edges}
@@ -388,17 +406,17 @@ As in \cite{esperet.joret.ea:sparse}, we distinguish between two kinds of edges 
 \end{lemma}
 
 \begin{proof}
-    Let $\ell_i:=(x_i,y_i,z_i)$ for each $i\in\{1,2\}$.  If the edge $\ell_1\ell_2\in E(U_n)$, then there exists some $t$-tree $H$ some path $P$, some $n$-vertex subgraph $G$ of $H\boxtimes P$, and some edge $(v_1,y_1')(v_2,y_2')$ of $G$ such that $\ell_1=\ell_G(v_1,y_1')$ and $\ell_G(v_2,y_2')=\ell_2$.
+    Let $\ell_i:=(x_i,y_i,z_i)$ for each $i\in\{1,2\}$.  If the edge $\ell_1\ell_2\in E(U_n)$, then there exists some $t$-tree $H$ some path $P$, some $n$-vertex subgraph $G$ of $H\boxtimes P$, and some edge $(v_1,y_1')(v_2,y_2')$ of $G$ such that $\ell_1=\ell_G(v_1,y_1')$ and $\ell_2=\ell_G(v_2,y_2')$.
 
     Since $y_1\neq y_2$, $y_1'\neq y_2'$.
-    The existence of the edge $(v_1,y_1')(v_2,y_2')$ therefore implies that $y_1'y_2'$ is an edge of $P$ so that (without loss of generality) $y_1'=y$ and $y_2'=y+1$ for some $y\in\{1,\ldots,h-1\}$.  Now, $y_1=\alpha_G(y)$ and $y_2=\alpha_G(y+1)$.  Specifically $y_2\in D(y_1)$ (see \cref{labels-i}) and, by $|D(y_1)|\in O(\log n)$.  Therefore, for a fixed $y_1$, the number of possible choices for $y_2$ is $O(\log n)$.
+    The existence of the edge $(v_1,y_1')(v_2,y_2')$ therefore implies that $y_1'y_2'$ is an edge of $P$ so that (without loss of generality) $y_1'=y$ and $y_2'=y+1$ for some $y\in\{1,\ldots,h-1\}$.  Now, $y_1=\alpha_G(y)$ and $y_2=\alpha_G(y+1)$.  Specifically $y_2\in D(y_1)$ (see \cref{labels-i}) and $|D(y_1)|\in O(\log n)$.  Therefore, for a fixed $y_1$, the number of possible choices for $y_2$ is $O(\log n)$.
 
-    By a similar line of reasoning, we can conclude that $v_1=v_2$ or that $v_1v_2\in E(H)$.  If $v_1=v_2$, then $x_2=J(x_1,\mu_y(x_1))$. Since $|\mu_y|\in o(\log n)$, the number of options for $\mu_y$ and hence the number of options for $x_2$ is $2^{o(\log n)}=n^{o(1)}$.
+    By a similar line of reasoning, we can conclude that $v_1=v_2$ or that $v_1v_2\in E(H)$.  If $v_1=v_2$, then $x_2=J(x_1,\mu_y(x_1))$ and we direct the edge from $\ell_1$ to $\ell_2$.  Since $\mu_y(x_1)$ is included as part of $z_1$, this implies that, for a fixed $(x_1,y_1,z_1)$ there is at most one choice of $x_2$.
 
-    Suppose, therefore, that $v_1\neq v_2$ so that $v_1v_2\in E(H)$.  Recall the definition of $S^+_y$, which implies that $v_1,v_2\in S^+_y\cap S^+_{y+1}$.  Since $v_1v_2\in E(H)$, one of $v_1$ or $v_2$ is an $H$-parent of the other. Since $(v_2,y+1)\in V(G)$, $v_2\in S^+_y$ so $x_y(v_2)$ is defined. By \pref{clique-path}, one of $x_2':=\sigma_y(x_y(v_2))$ or $x_1=\sigma_y(x_y(v_1))$ is a prefix of the other.  Without loss of generality, suppose $x_2'$ is a prefix of $x_1$ and direct the edge $\ell_1\ell_2$ away from $\ell_1$.
+    If $v_1\neq v_2$, then $v_1v_2\in E(H)$.  Recall the definition of $S^+_y$,  which implies that $v_1,v_2\in S^+_y\cap S^+_{y+1}$.  Since $v_1v_2\in E(H)$, one of $v_1$ or $v_2$ is an $H$-parent of the other. Since $(v_2,y+1)\in V(G)$, $v_2\in S^+_y$ so $x_y(v_2)$ is defined. By \psref{clique-path-ii}, one of $x_2':=\sigma_y(x_y(v_2))$ or $x_1=\sigma_y(x_y(v_1))$ is a prefix of the other.  Without loss of generality, suppose $x_2'$ is a prefix of $x_1$ and direct the edge $\ell_1\ell_2$ away from $\ell_1$.
 
     As in the previous proof, the number of choices for $x_2'$ is $O(\log n)=n^{o(1)}$.
-    Now, there exists a binary string $\mu'_y(v_2)$ of length $o(\log n)$ such that $J(x_2',\mu'_y(v_2))=\sigma_{y+1}(x_{y+1}(v))=x_2$.  For a fixed $x_2'$, the number of choices of $\mu'_y(v_2)$ is $2^{o(\log n)}=n^{o(1)}$ and, since $J$ is a function, the number of choices for $x_2$ is at most $n^{o(1)}$.  Therefore, for fixed $(x_1,y_1,z_1)$, the number of choices for $(x_2,y_2,z_2)$ that result in a Type~2 edge directed from $(x_1,y_1,z_1)$ to $(x_2,y_2,z_2)$ is at most $n^{o(1)}$.  Therefore, the total number of Type~2 edges is at most $|V(U_n)|\cdot n^{o(1)} = n^{1+o(1)}$.
+    Now, by \pref{transition-code} there exists a binary string $\mu'_y(v_2)$ of length $o(\log n)$ such that $J(x_2',\mu'_y(v_2))=\sigma_{y+1}(x_{y+1}(v))=x_2$.  For a fixed $x_2'$, the number of choices of $\mu'_y(v_2)$ is $2^{o(\log n)}=n^{o(1)}$ and, since $J$ is a function, the number of choices for $x_2$ is at most $n^{o(1)}$.  Therefore, for fixed $(x_1,y_1,z_1)$, the number of choices for $(x_2,y_2,z_2)$ that result in a Type~2 edge directed from $(x_1,y_1,z_1)$ to $(x_2,y_2,z_2)$ is at most $n^{o(1)}\cdot 2^\lambda=n^{o(1)}$.  Therefore, the total number of Type~2 edges is at most $|V(U_n)|\cdot n^{o(1)} = n^{1+o(1)}$.
 \end{proof}
 
 \Cref{flat-edges,vertical-edges} immediately imply our main theorem:
