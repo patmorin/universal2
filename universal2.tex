@@ -153,23 +153,80 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
 \subsection{Edge Density of the Universal Graph}
 \label{density-lower-bound}
 
-We now explain why the universal graph $I_n$ defined by the preceding labelling scheme is not sparse.  The main issue is the definition of $P_y(v)$ as the path in $T_y$ that contains every node in $X_y(v):=\{x_y(w):w\in C_v\}$.  The problem comes from the fact that there can be nodes in $X_y(v)$ that have much greater $T_y$-depth than $x_y(v)$.  This ultimately leads to a large complete bipartite graph with sides $L$ and $R$ in which the elements of $L$ all correspond to a single vertex $(v,y)$ of $H\boxtimes P$.
+We now explain why the universal graph $I_n$ defined by the preceding labelling scheme is not sparse and show that, without some additional effort, it leads to a universal graph $I_n$ having $\Omega(n^2)$ edges.  The main issue is the definition of $P_y(v)$ as the path in $T_y$ that contains every node in $X_y(v):=\{x_y(w):w\in C_v\}$.  The problem comes from the fact that there can be nodes in $X_y(v)$ that have much greater $T_y$-depth than $x_y(v)$.  This ultimately leads to a large complete bipartite graph with sides $L$ and $R$ in which the elements of $L$ all correspond to a single vertex $(v,y)$ of $H\boxtimes P$.  This problem even occurs when $P$ consists of a single vertex.
 
-Consider a set of subgraphs $G_1,\ldots,G_k$ of $H\boxtimes P$ that each contain the vertices $(v_0,y),\ldots,(v_k,y)$ and the edges $(v_0,y)(v_i,y)$ for each $i\in\{1,\ldots,k\}$.  Each of these graphs has a labelling scheme in which the vertices of $G_i$ are labelled by a function $\ell_i:V(G_i)\to\{0,1\}^{(1+o(1))\log n}$.  We add an additional subscript, $i$, to all of our notations so that, for example $\sigma_{i,y}(P_{i,y}(v))$ is the part of the label corresponding to $\sigma_y(P_y(v))$ in the labelling $\ell_i$ for $G_i$.
+Let $n\ge 12$ be an integer multiple of 12. Consider the tree $H$ illustrated in \cref{bad-example} that consists of a path $\beta,u,v,w,\alpha$ and a set of $n-5$ leaves.  One of these leaves, $r$ is adjacent to $w$. Another $n/2-3$ of these leaves are adjacent to $\alpha$, and the remaining $n/2-3$ leaves are adjacent to $\beta$.
 
-Suppose that, for each $i,j\in\{1,\ldots,k\}$, $\sigma_{i,y}(x_{i,y}(v_0))=\sigma_{j,y}(x_{j,y}(v_0))$ but that $\sigma_{i,y}(P_{i,y}(v_0))\neq\sigma_{j,y}(P_{j,y}(v_0))$.  This just means that, the path from the root is $T_{i,y}$ to $x_{i,y}(v_0)$ is the same for each $i\in\{1,\ldots,k\}$, but the path from $x_{i,y}(v_0)$ to the deepest node in $X_{i,y}$ is different for each $i\in\{1,\ldots,k\}$.  There is nothing about the definition of the labelling scheme that rules out this possibility.  Indeed, it could be that $x_{i,y}(v_0)$ is the root of $T_{i,y}$ for each $i\in\{1,\ldots,k\}$, in which case there is no apriori reason to believe that, for distinct $i,j\in\{1,\ldots,k\}$ that $\sigma_{i,y}(P_{i,y}(v_j))=\sigma_{i,y}(P_{i,y}(v_j))$.  In fact, this seems unlikely.
-
-Therefore, the universal graph $I_n$ contains $k$ distinct vertices $z_1,\ldots,z_k$ each corresponding to $(v_0,y)$ where $z_i=\ell_i(v_0,y)$ is the node corresponding to $(v_0,y_0)$ in the graph $G_i$.  For each $i\in\{1,\ldots,k\}$, $I_n$ also contains $k$ distinct vertices $z_{i,j}=\ell_i(v_j,y)$.  Since $(v_0,y)$ is adjacent to $(v_i,y)$ for each $i\in\{1,\ldots,k\}$, $z_i$ is adjacent to $z_{i,k}$ and therefore $z_i$ has degree at least $k$. Since this is true for each $i\in\{1,\ldots,k\}$, we conclude that, in this example, $I_n$ has at least $k^2$ edges.  Finally, note that there is no sublinear upper bound on $k$. Indeed, it is conceivable that this situation occurs even with $k=n/2$, yielding a universal graph $I_n$ with $\Omega(n^2)$ edges.
-
-\todo[inline]{The preceding example uses a high-degree vertex $v_0$, but the same problem exists if the graph has bounded degree (in fact, even if the graph is a path).  I think the example in \cref{bad-example} might be the most compelling, though since, for that one, it looks like any easy fix would be hack that doesn't generalize.}
+Observe that $T:=H-\{r\}$ is a tree, which we can root at $w$ to get a rooted tree decomposition $(B_x:x\in V(T))$ of $H$ where each bag $B_x$ contains $x$ and the $T$-parent of $x$.  In particular, $B_v:=\{v,w\}=C_v$.  When producing a mapping of $V(H)$ onto intervals it is natural to map $v$ and $r$ onto the dominating interval $[a_r,b_r]:=[a_v,b_v]:=[1,n-1]$.  Since $T-\{v\}$ consists of two stars centered at $\alpha$ and $\beta$, it is then natural to have $[a_\alpha,b_\alpha]:=[1, n/2-1]$ and $[a_\beta,b_\beta]:=[ n/2+1,n-1]$. Now, $H-\{v,r,\alpha,\beta\}$ has no edges, so the remaining vertices can be mapped to appropriate zero-length intervals. All nodes adjacent to $\alpha$ (including $w$) are mapped to $[i,i]$ for distinct $i\in\{1,\ldots, n/2-1\}\setminus\{n/4\}$. All nodes adjacent to $\beta$ (including $u$) are mapped to $[n/2+j, n/2+j]$ for distinct $j\in\{1,\ldots, n/2-1\}\setminus\{3n/4\}$.
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=.5\textwidth]{figs/bad-example}
+        \includegraphics{figs/bad-example}
     \end{center}
     \caption{A better bad example}
     \label{bad-example}
 \end{figure}
+
+For convenience, let $\alpha_i$ (respectively $\beta_j$) denote the node adjacent to $\alpha$ (respectively, $\beta$) that maps to the interval $[i,i]$ (respectively $[n/2+j,n/2+j]$).  It is entirely possible that $w=\alpha_p$ and $u=\beta_q$ for some $n/12\le p,q\le 2n/12$.  Suppose this is the case.  For each $i,j\in\{1,\ldots,n/12\}$, consider the induced subgraph $H_{i,j}$ of $H$ having vertex set
+\begin{compactenum}
+    \item $\beta,u,v,w,\alpha$;
+    \item $\alpha_1,\ldots,\alpha_i$ and $\alpha_{2n/12+1},\ldots,\alpha_{2n/12+n/12-i}$;
+    \item $\alpha_{n/4+1},\ldots,\alpha_{n/4+n/12}$;
+    \item $\beta_1,\ldots,\beta_j$ and $\beta_{2n/12+1},\ldots,\beta_{2n/12+n/12-j}$;
+    \item $\beta_{n/4+1},\ldots,\beta_{n/4+n/12}$;
+\end{compactenum}
+
+Let $P_1$ be a path of length 1.  If we apply the labelling scheme of \citet{dujmovic.esperet.ea:adjacency} to $H_{i,j}\boxtimes P_1$, to obtain a labelling $\ell_{i,j}:V(H_{i,j})\to\{0,1\}^*$ then the binary search tree $T_{1}$ used in defining $\ell_{i,j}$ could be any balanced binary search tree containing
+\begin{compactenum}
+    \item a root $r:=n/2$ so that $x_y(v)=r$.
+    \item depth-$1$ nodes $a=n/4$ and $b=3n/4$ so that $x_y(\alpha)=a$ and $x_y(\beta)=b$.
+    \item $\{k:\alpha_k \in V(H_{i,j})\}$;
+    \item $\{n/2+k:\beta_k\in V(H_{i,j})\}$.
+\end{compactenum}
+
+The first two levels of $T_1$ are fixed, independent of $i,j$ and each of the four depth-$2$ nodes is the root of a subtree of size $n/12$. In particular, the ``shape'' of $T_{1}$ can be the same for any $i,j\in\{1,\ldots,n/12\}$.  For example, if $n/12=2^k-1$ for some integer $k$, then $T_1$ could be a complete binary tree of height $k+2$.  Suppose that this is the case.  Then $\sigma_1(P_1(u))=\sigma_1(x_1(u))$ depends only on the choice of $j$.  Similarly, $\sigma_1(P_1(v))=\sigma_1(x_1(w))$ depends only on the choice of $i$.
+
+This means that the label $\ell_{i}(v):=\ell_{i,j}(v,1)$ depends only on $i$ and is distinct for each $i\in\{1,\ldots,n/12\}$.  Similarly, the label $\ell_j(u):=\ell_{i,j}(u,1)$ depends only on $j$ and is distinct for each $j\in\{1,\ldots,n/12\}$.  Furthermore $uv$ is an edge of $T_{i,j}$ for each $i,j\in\{1,\ldots,n/12\}$, so $A(\ell_{i}(v),\ell_{j}(u))=1$ for each $i,j\in\{1,\ldots,n/12\}$. Therefore, the universal graph $I_n$ contains a complete bipartite subgraph with parts $L:=\{\ell_{i}(v):i\in\{1,\ldots,n/12\}\}$ and $R:=\{\ell_{j}(u):j\in\{1,\ldots,n/12\}\}$.  Therefore $|E(I_n)|\ge n^2/144$.
+
+
+%
+%
+% Thus, for each $i\in\{1,\ldots,n/4$
+%
+% Since $\sigma_1(P_1(u))$ appears
+%
+%
+%
+%
+%
+%  $P_{1}(v)$
+%
+%
+%
+%
+%     the remaining nodes $\{0,\ldots,n\}\setminus\{n/2,n/4,3n/4\}$.
+%     \item two complete binary trees containa
+%
+%
+%
+%
+% If we apply the labelling scheme to $G_i$, then this will give produce a binary search tree $T_1$ in which $x_1(v)$ is the root.  \ldots \todo{finish this section}
+%
+%
+% Furthermore, for most $i\neq j$,  $\sigma_{i,1}(x_{i,1}(w))\neq \sigma_{j,1}(x_{j,1}(w))$ and $\sigma_{i,1}(x_{i,1}(u))\neq \sigma_{j,1}(x_{j,1}(u))$.  (Here $\sigma_{i,1}$ and $\x_{i,1}$ refer to the functions $\sigma_1$ and $x_1$ obtained when computing labels for the tree $T_i$.)  I
+%
+%
+%  contains
+%
+%
+% $G_1,\ldots,G_k$ of $H\boxtimes P$ that each contain the vertices $(v_0,y),\ldots,(v_k,y)$ and the edges $(v_0,y)(v_i,y)$ for each $i\in\{1,\ldots,k\}$.  Each of these graphs has a labelling scheme in which the vertices of $G_i$ are labelled by a function $\ell_i:V(G_i)\to\{0,1\}^{(1+o(1))\log n}$.  We add an additional subscript, $i$, to all of our notations so that, for example $\sigma_{i,y}(P_{i,y}(v))$ is the part of the label corresponding to $\sigma_y(P_y(v))$ in the labelling $\ell_i$ for $G_i$.
+%
+% Suppose that, for each $i,j\in\{1,\ldots,k\}$, $\sigma_{i,y}(x_{i,y}(v_0))=\sigma_{j,y}(x_{j,y}(v_0))$ but that $\sigma_{i,y}(P_{i,y}(v_0))\neq\sigma_{j,y}(P_{j,y}(v_0))$.  This just means that, the path from the root is $T_{i,y}$ to $x_{i,y}(v_0)$ is the same for each $i\in\{1,\ldots,k\}$, but the path from $x_{i,y}(v_0)$ to the deepest node in $X_{i,y}$ is different for each $i\in\{1,\ldots,k\}$.  There is nothing about the definition of the labelling scheme that rules out this possibility.  Indeed, it could be that $x_{i,y}(v_0)$ is the root of $T_{i,y}$ for each $i\in\{1,\ldots,k\}$, in which case there is no apriori reason to believe that, for distinct $i,j\in\{1,\ldots,k\}$ that $\sigma_{i,y}(P_{i,y}(v_j))=\sigma_{i,y}(P_{i,y}(v_j))$.  In fact, this seems unlikely.
+%
+% Therefore, the universal graph $I_n$ contains $k$ distinct vertices $z_1,\ldots,z_k$ each corresponding to $(v_0,y)$ where $z_i=\ell_i(v_0,y)$ is the node corresponding to $(v_0,y_0)$ in the graph $G_i$.  For each $i\in\{1,\ldots,k\}$, $I_n$ also contains $k$ distinct vertices $z_{i,j}=\ell_i(v_j,y)$.  Since $(v_0,y)$ is adjacent to $(v_i,y)$ for each $i\in\{1,\ldots,k\}$, $z_i$ is adjacent to $z_{i,k}$ and therefore $z_i$ has degree at least $k$. Since this is true for each $i\in\{1,\ldots,k\}$, we conclude that, in this example, $I_n$ has at least $k^2$ edges.  Finally, note that there is no sublinear upper bound on $k$. Indeed, it is conceivable that this situation occurs even with $k=n/2$, yielding a universal graph $I_n$ with $\Omega(n^2)$ edges.
+%
+% \todo[inline]{The preceding example uses a high-degree vertex $v_0$, but the same problem exists if the graph has bounded degree (in fact, even if the graph is a path).  I think the example in \cref{bad-example} might be the most compelling, though since, for that one, it looks like any easy fix would be hack that doesn't generalize.}
+
 
 \section{A Sparse Universal Graph}
 \label{modifications}
@@ -260,7 +317,7 @@ For each vertex $(v,y)$ of $G$, the label $\ell(v,y)$ has these parts:
 
     \item $d_y(x'_y(p_i(v)))$ for each $i\in\{1,\ldots,t+1\}$ (a bitstring of length $(t+1)\lceil\log(t+1)\rceil$).
 
-    \item $\psi'_{y+b}(p_i(v))$ for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ (a bitstring of length $O(t^2\log\log n)$).\label{psi-prime}
+    \item $\psi'_{y+b}(p_i(v))$ for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ (by \psref{psi-prime}, this is a bitstring of length $O(t^2\log\log n)$).\label{psi-prime}
 
     \item $a_y(v)$: this is unmodified from the original scheme.
 
@@ -275,7 +332,7 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
     \begin{enumerate}[(a)]
         \item $y:=y_1=y_2$.  For each $i\in\{1,\ldots,t+1\}$, determine if $v_1=p_i(v_2)$ (or \textit{vice-versa}) and, if so, use $a_y(v_2)$ (or $a_y(v_1)$, respectively) to determine if $(v_1,y)$ and $(v_2,y)$ are adjacent in $G$. Specifically, if $v_1=p_i(v_2)$ then one of the bits in $a_y(v_2)$ indicates whether or $(v_1,y_1)$ and $(v_2,y_1)$ are adjacent in $G$. If $v_1\neq p_i(v_2)$ and $v_2\neq p_i(v_1)$ for every $i\in\{1,\ldots,h\}$, then $v_1v_2\not\in E(H)$ and hence $(v_1,y)$ and $(v_2,y)$ are not adjacent in $G\subseteq H\boxtimes P$.
 
-        By \pref{unique-match}, testing if $v_1=p_i(v_2)$, is equivalent to testing if $\sigma_y(x'_y(v_1))=\sigma_y(x'_y(p_i(v_2)))$ and $\psi'_y(v_1)=\psi'_y(p_i(v_2))$. We now show that $\ell(v_1,y_1)$ and $\ell(v_2,y)$ contain enough information to perform this test.
+        By \psref{unique-match-ii}, testing if $v_1=p_i(v_2)$, is equivalent to testing if $\sigma_y(x'_y(v_1))=\sigma_y(x'_y(p_i(v_2)))$ and $\psi'_y(v_1)=\psi'_y(p_i(v_2))$. We now show that $\ell(v_1,y_1)$ and $\ell(v_2,y)$ contain enough information to perform this test.
         \begin{compactitem}
             \item We can recover $d_y(x'_y(v_1))=d_y(x'_y(p_{\varphi(v_1)}(v_1)))$ and using this, recover $\sigma_y(x'_y(v_1))$ from $\sigma_y(x_y(v_1))$ and $d_y(x'_y(v_1))$.  Next, we can recover $\sigma_y(x'_y(p_i(v_2)))$ from $\sigma_y(P'_y(v))$ and $d_y(x'_y(p_i(v)))$. This makes it possible to test if $\sigma_y(x'_y(v_1))=\sigma_y(x'_y(p_i(v_2)))$.
             \item  The colour $\psi'_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi'_y(v_1)=\psi'_y(p_{\varphi(v_1)}(v_1))$.  The colour $\psi'_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$.  This makes it possible to test if $\psi'_y(v_1)=\psi'_y(p_i(v_2))$.
