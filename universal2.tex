@@ -1,7 +1,7 @@
 \documentclass{patmorin}
 
 \usepackage{amssymb,amsthm,amsmath}
-\usepackage{url,html}
+\usepackage{url}
 \usepackage[longnamesfirst,numbers,sort&compress]{natbib}
 \usepackage{cleveref}
 \usepackage{paralist}
@@ -32,7 +32,7 @@
 
 \section{Introduction}
 
-Very recently, \citet{dujmovic.esperet.ea:adjacency} described a $(1+o(1))\log n$-bit adjacency labelling scheme for planar graphs.  This means that there is a single function $A:\{0,1\}^*\times\{0,1\}^* \to\{0,1\}$ such that, for any $n$ vertex planar graph $G$ there is a labelling $\ell:V(G)\to\{0,1\}^{(1+o(1))\log n}$ for which $A(\ell(v),\ell(w))=1$ if and only if $vw\in E(G)$.
+Very recently, \citet{dujmovic.esperet.ea:adjacency} described a $(1+o(1))\log n$-bit adjacency labelling scheme for planar graphs.  This means that there is a single function $A:\{0,1\}^*\times\{0,1\}^* \to\{0,1\}$ such that, for any $n$-vertex planar graph $G$ there is a labelling $\ell:V(G)\to\{0,1\}^{(1+o(1))\log n}$ for which $A(\ell(v),\ell(w))=1$ if and only if $vw\in E(G)$.
 
 This result has the following immediate consequence: For every positive integer $n$, there exists a graph $I_n$ having $n^{1+o(1)}$ \emph{vertices} such that, for every $n$-vertex planar graph $G$, $I_n$ contains an induced subgraph isomorphic to $G$.  To see this, let $I_n$ be the graph with vertex set $V(I_n):=\{0,1\}^{(1+o(1))\log n}$ and for which $xy\in E(I_n)$ if and only $A(x,y)=1$.  Then, for any $n$-vertex planar graph $G$ with labelling $\ell$, the induced subgraph $I_n[\{\ell(v):v\in V(G)\}]$ is isomorphic to $V(G)$.  The graph $I_n$ is called an \emph{induced-universal graph} for the class of $n$-vertex planar graphs.
 
@@ -79,7 +79,7 @@ The \emph{strong product} $G_1\boxtimes G_2$ of two graphs $G_1$ and $G_2$ is th
 We can now describe the main result of \citet{dujmovic.esperet.ea:adjacency}.
 For any integer $t\ge 1$, let $\mathcal{G}_t$ the set of graphs that contains, for every $t$-tree $H$ and every path $P$, every subgraph of $H\boxtimes P$.  The labelling scheme of \citet{dujmovic.esperet.ea:adjacency} works for any $n$-vertex member of $\mathcal{G}_t$ for any constant $t$.  In particular, it works for any $n$-vertex planar graph because $\mathcal{G}_8$ contains every planar graph \cite[Theorem~36]{dujmovic.joret.ea:planar}.
 
-We now describe how the labelling scheme works for some $n$-vertex member $G$ of $\mathcal{G}_t$, so $G$ is a subgraph of $H\boxtimes P$ for some $t$-tree $H$ and some path $P$.  Without loss of generality, we may assume that the vertices of $P$ are the integers $1,\ldots,h$ in the order they occur on the path $P$ and that, for each $y\in\{1,\ldots,h\}$ there exists at least one $v\in V(H)$ such that $(v,y)\in V(G)$, so $h\le n$.  Similarly, we may assume that $|V(H)|\le n$.
+We now describe how the labelling scheme works for some $n$-vertex member $G$ of $\mathcal{G}_t$, so $G$ is a subgraph of $H\boxtimes P$ for some $t$-tree $H$ and some path $P$.  Without loss of generality, we may assume that the vertices of $P$ are the integers $1,\ldots,h$ in the order they occur on the path $P$ and that, for each $y\in\{1,\ldots,h\}$ there exists at least one $v\in V(H)$ such that $(v,y)\in V(G)$, so $h\le n$.  \textcolor{red}{[L. we might add a few words here, saying that the vertices of $H\boxtimes P$ are pairs $(v,y)$, and thus the vertex set of $G$, as a subgraph of $H\boxtimes P$ also consists of pairs $(v,y)$. ]} Similarly, we may assume that $|V(H)|\le n$.
 
 Without loss of generality, we may assume that $H$ has at least $t+1$ vertices. Fix a tree decomposition $(A_{x}:x\in V(T))$ of $H$ in which each bag has size exactly $t+1$ and in which no two bags have the same contents.  Root $T$ at an arbitrary node $r$ and, for each vertex $v$ of $H$, let $C_v:=A_{x}$ where $x$ is the minimum-depth node of $T$ such that $v\in A_{x}$.  The vertex set $C_v$ has size $t+1$, includes $v$, and is called the \emph{family clique} of $v$.
 
@@ -106,7 +106,7 @@ For each $y\in\{1,\ldots,h\}$ and each $v\in L_y$, we define $P_y(v)$ to be the 
 It is helpful to think of $x_y$ as a function $x_y:S^+_y\to V(T_y)$.  For each $y\in\{1,\ldots,h\}$ and each node $x$ of $T_y$, let $B_{y,x}:=\{v\in S^+_y: x_y(v)=x\}=x_y^{-1}(x)$.  Since $x\in[a_v,b_v]$ for each $v\in B_{y,x}$, \pref{thin} implies the following property:
 
 \begin{compactenum}[(P1)]\setcounter{enumi}{2}
-    \item For each $y\in\{1,\ldots,h\}$ and each $x\in V(T_y)$, $|B_{y,x}|\in O(t\log n)$. \label{small-bags-i}
+    \item For each $y\in\{1,\ldots,h\}$ and each $x\in V(T_y)$, $|B_{y,x}|\in O(t\log n)$.\label{small-bags-i}
 \end{compactenum}
 
 Let $\psi_y:S^+_y\to\{1,\ldots,O(t\log n)\}$ be a colouring of $S^+_y$ such that, for each $x\in V(T_y)$ and each distinct pair $v,w\in B_{y,x}$ $\psi_y(v)\neq\psi_y(w)$.  Such a colouring exists by \pref{small-bags-i} and because $x_y$ is a function so each $v\in S^+_y$ appears in $B_{y,x}$ for exactly one $x\in V(T_y)$.  Note that, for any $v\in S^+_y$, the pair $(x_y(v), \psi_y(v))$ uniquely identifies $v$.  Since the signature function $\sigma_y:=\sigma_{T_y}$ is injective, this means that $\sigma_y(x_y(v))$ and $\psi_y(v)$ also uniquely identify $v$.
@@ -117,9 +117,9 @@ Let $\psi_y:S^+_y\to\{1,\ldots,O(t\log n)\}$ be a colouring of $S^+_y$ such that
 
 The binary search tree sequence $T_1,\ldots,T_h$ is very special because it has two important properties:
 \begin{compactenum}[(P1)]\setcounter{enumi}{4}
-    \item For each $y\in\{1,\ldots,h\}$, $h(T_y)\le \log|S^+_y|+o(\log n)$.\label{tree-height}
+    \item For each $y\in\{1,\ldots,h\}$, $h(T_y)\le \log|S^+_y|+o(\log n)$. \textcolor{red}{[L. we need to define the height $h(T)$ at some point, and maybe also change the name? it is a bit disturbing to have for any (...) $h$, $h(T)...$ for two different meanings of $h$]} \label{tree-height}
     % \item There exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for each $y\in\{1,\ldots,h-1\}$ and each $x\in V(T_y)\cap V(T_{y+1})$ there exists a bitstring $\mu_y(x)$ of length $o(\log n)$ such that $J(\sigma_{y}(x),\mu_y(x))=\sigma_{T_{y+1}}(x)$. \label{transition-code-x}
-    \item There exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for each $y\in\{1,\ldots,h-1\}$ and each $v\in S^+_y\cap S^+_{y+1}$, there exists a bitstring $\mu_y(v)$ of length $o(\log n)$ such that $J(\sigma_{y}(x_y(v)),\mu_y(v))=\sigma_{y+1}(x_{y+1}(v))$. \label{transition-code-v}
+    \item There exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for each $y\in\{1,\ldots,h-1\}$ and each $v\in S^+_y\cap S^+_{y+1}$, there exists a bitstring $\mu_y(v)$ of length $o(\log n)$ such that $J(\sigma_{y}(x_y(v)),\mu_y(v))=\sigma_{y+1}(x_{y+1}(v))$. \textcolor{red}{[L. I think we need to say more here, in the original paper $J$ takes $\sigma(P_y(v))$ as input, not just $\sigma(x_y(v))$]}\label{transition-code-v}
 \end{compactenum}
 The bitstring $\mu_y(v)$ is called a \emph{transition code}.  The existence of the tree sequence $T_1,\ldots,T_h$ and corresponding transition codes is non-trivial and is the primary technical tool used to establish the results in \cite{dujmovic.esperet.ea:adjacency,esperet.joret.ea:sparse}.
 
@@ -146,12 +146,12 @@ For each vertex $(v,y)$ of $G\subseteq H\boxtimes P$, the label $\ell(v,y)$ has 
 
     \item $d_y(x_y(p_i(v)))$ for each $i\in\{1,\ldots,t+1\}$ (a bitstring of length $O(t\log\log n)$.
 
-    \item $\psi_{y+b}(p_i(v))$ for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ (a bitstring of length $O(t\log\log n + t\log t)$).\label{psi}
+    \item $\psi_{y+b}(p_i(v))$ for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ (a bitstring of length $O(t\log\log n + t\log t)$).\label{psi} \textcolor{red}{[L. was this part in the original labelling? Didn't we use $\phi$ to do this?]}
 
     \item $a_y(v)$: A bitstring of length $3(t+1)$ that indicates, for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ whether or not $G$ contains the edge with endpoints $(v,y)$ and $(p_i(v),y+b)$.
 \end{compactenum}
 
-The label (L1) requires some further explanation. $\alpha(y)$ consists of two parts: $(\alpha_1(y))$ is a bitstring of length at most $\log n-\log |S^+_y|$ and $\alpha_2(y)$ is a bitstring of length at most $\log\log n+O(1)$.  These strings are designed so that there is a universal function $N$ such that $N(\alpha(y_1))=\alpha_1(y_2)$ if and only if $y_2=y_1+1$.  Clearly this make it possible to distinguish between cases~(a)--(d).  It also has the following implication:  For any fixed $\alpha(y_1)$ there are at most $2^{\log \log n+O(1)}=O(\log n)$ values of $\alpha(y_2)$ that result in case (b).  Indeed, these are $D(\alpha(y_1)):=\{N(\alpha(y_1))\mathbin{\circ} s: s\in\{0,1\}^{\log\log n+O(1)}\}$.
+The label (L1) requires some further explanation. $\alpha(y)$ consists of two parts: $(\alpha_1(y))$ is a bitstring of length at most $\log n-\log |S^+_y|$ and $\alpha_2(y)$ is a bitstring of length at most $\log\log n+O(1)$.  These strings are designed so that there is a universal function $N$ such that $N(\alpha(y_1))=\alpha_1(y_2)$ if and only if $y_2=y_1+1$.  Clearly this makes it possible to distinguish between cases~(a)--(d).  It also has the following implication:  For any fixed $\alpha(y_1)$ there are at most $2^{\log \log n+O(1)}=O(\log n)$ values of $\alpha(y_2)$ that result in case (b).  Indeed, these are $D(\alpha(y_1)):=\{N(\alpha(y_1))\mathbin{\circ} s: s\in\{0,1\}^{\log\log n+O(1)}\}$.
 
 \subsection{Adjacency Testing}
 
@@ -166,9 +166,9 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
             \item We can recover $d_y(x_y(v_1))=d_y(x_y(p_{\varphi(v_1)}(v_1)))$ and using this, recover $\sigma_y(x_y(v_1))$ from $\sigma_y(P_y(v_1))$ and $d_y(x_y(v_1))$.  Next, we can recover $\sigma_y(x_y(p_i(v_2)))$ from $\sigma_y(P_y(v_2))$ and $d_y(x_y(p_i(v_2)))$. This makes it possible to test if $\sigma_y(x_y(v_1))=\sigma_y(x_y(p_i(v_2)))$.
             \item  The colour $\psi_y(v_1)$ can be recovered from $\ell(v_1,y_1)$ since $\psi_y(v_1)=\psi_y(p_{\varphi(v_1)}(v_1))$.  The colour $\psi_y(p_i(v_2))$ is stored explicitly in $\ell(v_2,y_2)$.  This makes it possible to test if $\psi_y(v_1)=\psi_y(p_i(v_2))$.
         \end{compactitem}
-        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(P_y(v_1))$ from $\sigma_{y_1}(P_{y_1}(v_1))$ and $\eta_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
+        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(P_y(v_1))$ from $\sigma_{y_1}(P_{y_1}(v_1))$ and $\eta_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$. \textcolor{red}{[I think we can elaborate a little here, explaining that (L6) contains the information to compare the $\psi_{y+1}$ of the 2 vertices]}
 
-        \item $y:=y_1=y_{2}+1$. This case is symmetric to the previous case with the roles and $1$ and $2$ reverse.
+        \item $y:=y_1=y_{2}+1$. This case is symmetric to the previous case with the roles and $1$ and $2$ reversed.
 
         \item $|y_1-y_2|\ge 2$.  In this case $y_1\neq y_2$ and $y_1y_2\not\in E(P)$ and therefore $(v_1,y_1)$ and $(v_2,y_2)$ are not adjacent in $G\subseteq H\boxtimes P$.
     \end{enumerate}
@@ -266,13 +266,13 @@ We now describe how to modify the adjacency labelling scheme of \citet{dujmovic.
             \FOR{each $w\in C_v \cap S^+_y$}
                 \IF{$d_y(x'_y(w)) > d_y(x)+1$}
                     \STATE{\COMMENT{this implies that $x'_y(w)=x_y(w)$}}
-                    \STATE{$x'_y(w)\gets\mbox{the depth-$(d_y(x)+1)$ $T_y$-ancestor of ${\color{red}x'_y}(w)$}$}
-                    \STATE{\COMMENT{so $x'_y(w)$ becomes a child of $x=x'_y(v)$} \label{changes}}
+                    \STATE{$x'_y(w)\gets\mbox{the depth-$(d_y(x)+1)$ $T_y$-ancestor of ${\color{red}x'_y}(w)$}$\label{changes}}
+                    \STATE{\COMMENT{so $x'_y(w)$ becomes a child of $x=x'_y(v)$} }
                 \ENDIF
             \ENDFOR
         \ENDFOR
-        \STATE{\textsc{Fixup}(left child of $u$) (if any)}
-        \STATE{\textsc{Fixup}(right child of $u$) (if any)}
+        \STATE{\textsc{Fixup}(left child of $u$) (if any)} \textcolor{red}{$u$ should be $x$?}
+        \STATE{\textsc{Fixup}(right child of $u$) (if any)} \textcolor{red}{$u$ should be $x$?}
     \end{algorithmic}
 \end{minipage}
 
@@ -365,7 +365,7 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
             \item  The colour $\psi'_y(v_1)$ can be recovered from $\ell(v_1,y_1)$ since $\psi'_y(v_1)=\psi'_y(p_{\varphi(v_1)}(v_1))$.  The colour $\psi'_y(p_i(v_2))$ is stored explicitly in $\ell(v_2,y_2)$.  This makes it possible to test if $\psi'_y(v_1)=\psi'_y(p_i(v_2))$.
         \end{compactitem}
 
-        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(x_y(v_1))$ from $\sigma_{y_1}(x_{y_1}(v_1))$ and $\mu_{y_1}(v_1)$.  Next, recover $\sigma_y(P'_y(v))=\sigma_y(x_y(v_1))\mathbin{\circ}b_{y_1+1}(v)$. At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
+        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(x_y(v_1))$ from $\sigma_{y_1}(x_{y_1}(v_1))$ and $\mu_{y_1}(v_1)$.  Next, recover $\sigma_y(P'_y(v))=\sigma_y(x_y(v_1))\mathbin{\circ}b_{y_1+1}(v)$. At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.  \textcolor{red}{[I think we can elaborate a little here, explaining that (L6) contains the information to compare the $\psi_{y+1}'$ of the 2 vertices]}
 
         \item $y:=y_1=y_{2+1}$. This case is symmetric to the previous case with the roles and $1$ and $2$ reverse.
 
@@ -379,7 +379,7 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
 In the preceding sections we have described an adjacency testing function $A$ such that, for any $n$-vertex $G\in \mathcal{G}_t$, there exists a labelling $\ell_G:V(G)\to\{0,1\}^{(1+o(1))\log n}$ such that, for any $v,w\in V(G)$, $A(\ell_G(v),\ell_G(w))=1$ if and only if $vw\in E(G)$.  We define the induced-universal graph $U_n$ as follows: $V(U_n)$ contains $\ell_G(v,y)$ for each $n$-vertex graph $G\in\mathcal{G}_t$ and each $(v,y)\in V(G)$. Similarly, an edge $\ell_1\ell_2$ is in $I_n$ if and only if there exists an $n$-vertex graph $G\in\mathcal{G}_t$ that contains an edge $vw$ such that $\ell_G(v)=\ell_1$ and $\ell_G(w)=\ell_2$.
 
 % For each $n$-vertex $G\in\mathcal{G}_t$ and each $v\in V(G)$, $|\ell_G(v)|=(1+o(1))\log n$.  Therefore, $U_n$ has at most $2^{(1+o(1))\log n}=n^{1+o(1)}$ vertices.
-We will now show that $U_n$ has $n^{1+o(1)}$ vertices and edges.  This analysis mostly follows along the same lines as the analysis of \citet{esperet.joret.ea:sparse} but is, by necessity, a little less modular.\footnote{The modular approach used by \citet{esperet.joret.ea:sparse} to describe a subgraph-universal graph can be ruled out by a simple counting argument.  They describe a subgraph-universal graph for $C_d\boxtimes K_\omega\boxtimes P_n$ for $c,\omega\in\Theta(\log n)$.  However, the subgraph $\overline{G}:=C_{\log n/\log\log n}\boxtimes K_\omega$ has $n$ vertices and $\Theta(n\log^2 n/\log\log n)$ edges.  The graph $\overline{G}$ has at least $2^{\Omega(n\log^2 n/\log\log n)}$ non-isomorphic [TODO: check this non-isomorphic part] $n$-vertex subgraphs so any binary encoding for subgraphs of $\overline{G}$ must use at least $\Omega(n\log^2/\log\log n)$ bits to encode some subgraphs.  Therefore any labelling scheme for subgraphs of $\overline{G}$ must use labels of length at most $\Omega(\log^2 n/\log\log n)$.  Therefore any induced-universal graph for subgraphs of $\overline{G}$ must have $2^{\Omega(\log^2 n/\log\log n)}=n^{\omega(\log n/\log\log n)}$ vertices.}
+We will now show that $U_n$ has $n^{1+o(1)}$ vertices and edges.  This analysis mostly follows along the same lines as the analysis of \citet{esperet.joret.ea:sparse} but is, by necessity, a little less modular.\footnote{The modular approach used by \citet{esperet.joret.ea:sparse} to describe a subgraph-universal graph can be ruled out by a simple counting argument.  They describe a subgraph-universal graph for $C_d\boxtimes K_\omega\boxtimes P_n$ for $d,\omega\in\Theta(\log n)$.  However, the subgraph $\overline{G}:=C_{\log n/\log\log n}\boxtimes K_\omega$ has $n$ vertices and $\Theta(n\log^2 n/\log\log n)$ edges.  The graph $\overline{G}$ has at least $2^{\Omega(n\log^2 n/\log\log n)}$ non-isomorphic [TODO: check this non-isomorphic part] $n$-vertex subgraphs so any binary encoding for subgraphs of $\overline{G}$ must use at least $\Omega(n\log^2/\log\log n)$ bits to encode some subgraphs.  Therefore any labelling scheme for subgraphs of $\overline{G}$ must use labels of length at most $\Omega(\log^2 n/\log\log n)$.  Therefore any induced-universal graph for subgraphs of $\overline{G}$ must have $2^{\Omega(\log^2 n/\log\log n)}=n^{\omega(\log n/\log\log n)}$ vertices.}
 In this analysis, it will be helpful to think of each label $\ell_G(v,y')$ in the labelling of a graph $G$ as a triple $(x,y,z)$ where $x=\sigma_y(x_y(v))$, $y=\alpha(y')$, and $z$ is the concatenation of the bitstrings (NL3)-(NL8). Of course, since each vertex of $U_n$ is $\ell_G(v,y')$ for some $G\in\mathcal{G}_t$ and some $(v,y')\in V(G)$, we can also treat the vertices of $U_n$ as triples.  Thus, each vertex of $U_n$ is a triple $(x,y,z)$ where $x$, $y$, and $z$ are bitstrings with  $|x|+|y|\le \log n + \lambda$ and $|z|\le \lambda$ where $\lambda\in o(\log n)$.
 
 \begin{lemma}\label{vertex-count}
