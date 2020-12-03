@@ -113,10 +113,11 @@ Let $\psi_y:S^+_y\to\{1,\ldots,O(t\log n)\}$ be a colouring of $S^+_y$ such that
 
 The binary search tree sequence $T_1,\ldots,T_h$ is very special because it has two important properties:
 \begin{compactenum}[(P1)]\setcounter{enumi}{4}
-    \item For each $y\in\{1,\ldots,h\}$, $h(T_y)\le \log|S^+_y|+o(\log n)$.
-    \item There exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for each $y\in\{1,\ldots,h-1\}$ and each $x\in V(T_y)\cap V(T_{y+1})$ there exists a bitstring $\mu_y(x)$ of length $o(\log n)$ such that $J(\sigma_{T_y}(x),\mu_y(x))=\sigma_{T_{y+1}}(x)$. \label{transition-code}
+    \item For each $y\in\{1,\ldots,h\}$, $h(T_y)\le \log|S^+_y|+o(\log n)$.\label{tree-height}
+    % \item There exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for each $y\in\{1,\ldots,h-1\}$ and each $x\in V(T_y)\cap V(T_{y+1})$ there exists a bitstring $\mu_y(x)$ of length $o(\log n)$ such that $J(\sigma_{y}(x),\mu_y(x))=\sigma_{T_{y+1}}(x)$. \label{transition-code-x}
+    \item There exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for each $y\in\{1,\ldots,h-1\}$ and each $v\in S^+_y\cap S^+_{y+1}$, there exists a bitstring $\mu_y(v)$ of length $o(\log n)$ such that $J(\sigma_{y}(x_y(v)),\mu_y(x))=\sigma_{y+1}(x_y(v))$. \label{transition-code-v}
 \end{compactenum}
-The bitstring $\mu_y(x)$ is called a \emph{transition code}.  The existence of the tree sequence $T_1,\ldots,T_h$ and corresponding transition codes is non-trivial and is the primary technical tool used to establish the results in \cite{dujmovic.esperet.ea:adjacency,esperet.joret.ea:sparse}.
+The bitstring $\mu_y(v)$ is called a \emph{transition code}.  The existence of the tree sequence $T_1,\ldots,T_h$ and corresponding transition codes is non-trivial and is the primary technical tool used to establish the results in \cite{dujmovic.esperet.ea:adjacency,esperet.joret.ea:sparse}.
 
 \subsection{The Labels}
 \label{labels-i}
@@ -135,7 +136,7 @@ For each vertex $(v,y)$ of $G$, the label $\ell(v,y)$ has these parts:
     \item $\sigma_y(P_y(v))$: this is a bitstring of length at most $h(T_y)\le \log|S^+_y| + o(\log n)$
     % a bitstring of length at most $h(T_y)$ that encodes the path $P_y(v)$ where a 0 (respectively, 1) indicates a step from the current node to its left (respectively, right) child.
 
-    \item $\mu_y(v)$: a bitstring of length $o(\log n)$.  This bitstring is designed so that, for any node $v\in S^+_y\cap S^+_{y+1}$, it is possible to recover $\sigma_{y+1}(P_{y+1}(v))$ given only $\sigma_y(P_y(v))$ and $\mu_y(v)$.
+    \item $\nu_y(v)$: a bitstring of length $o(\log n)$.  This bitstring is designed so that, for any vertex $v\in S^+_y\cap S^+_{y+1}$, it is possible to recover $\sigma_{y+1}(P_{y+1}(v))$ given only $\sigma_y(P_y(v))$ and $\nu_y(v)$.  The existence of $\nu_y(v)$ follows easily from \pref{transition-code-v}.
 
     \item $\varphi(v)$: the colour of $v$ in the proper colouring of $H$ (a bitstring of length $\lceil\log(t+1)\rceil$).
 
@@ -161,7 +162,7 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
             \item We can recover $d_y(x_y(v_1))=d_y(x_y(p_{\varphi(v_1)}(v_1)))$ and using this, recover $\sigma_y(x_y(v_1))$ from $\sigma_y(P_y(v_1))$ and $d_y(x_y(v_1))$.  Next, we can recover $\sigma_y(x_y(p_i(v_2)))$ from $\sigma_y(P_y(v))$ and $d_y(x_y(p_i(v)))$. This makes it possible to test if $\sigma_y(x_y(v_1))=\sigma_y(x_y(p_i(v_2)))$.
             \item  The colour $\psi_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi_y(v_1)=\psi_y(p_{\varphi(v_1)}(v_1))$.  The colour $\psi_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$.  This makes it possible to test if $\psi_y(v_1)=\psi_y(p_i(v_2))$.
         \end{compactitem}
-        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(P_y(v_1))$ from $\sigma_{y_1}(P_{y_1}(v_1))$ and $\mu_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
+        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(P_y(v_1))$ from $\sigma_{y_1}(P_{y_1}(v_1))$ and $\nu_{y_1}(v_1)$.  At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
 
         \item $y:=y_1=y_{2+1}$. This case is symmetric to the previous case with the roles and $1$ and $2$ reverse.
 
@@ -331,7 +332,7 @@ For each vertex $(v,y)$ of $G$, the label $\ell(v,y)$ has these parts:
     \item $\sigma_y(x_y(v))$: note that this is not $\sigma_y(P'_y(v))$, but
     $\sigma_y(x'_y(v))$ can be recovered from $\sigma_y(x_y(v))$ and $d_y(x'_y(p_{\varphi(v)}(v))$. This makes it possible to recover $\sigma_y(P'_y(v))=\sigma_y(x'_y(v))\mathbin{\circ} b_y(v)$ where $b_y(v)$ is defined in (NL8), below.
 
-    \item $\mu'_y(v)$: a bitstring of length $o(\log n)$.  This bitstring is designed so that, for any node $v\in S^+_y\cap S^+_{y+1}$, it is possible to recover $\sigma_{y+1}(x_{y+1}(v))$ given only $\sigma_y(x_y(v))$ and $\mu_y(v)$.\footnote{The \emph{transition code} $\mu'_y(v)$ is defined in \cite[Section~5.3]{dujmovic.esperet.ea:adjacency}.}
+    \item $\mu_y(v)$: a bitstring of length $o(\log n)$.  This bitstring, defined in \pref{transition-code-v}, is designed so that for any vertex $v\in S^+_y\cap S^+_{y+1}$, it is possible to recover $\sigma_{y+1}(x_{y+1}(v))$ given only $\sigma_y(x_y(v))$ and $\mu_y(v)$.
 
     \item $\varphi(v)$: the colour of $v$ in the proper colouring of $H$ (a bitstring of length $\lceil\log(t+1)\rceil$).
 
@@ -358,7 +359,7 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
             \item  The colour $\psi'_y(v_1)$ can be recovered from the label of $(v_1,y_1)$ since $\psi'_y(v_1)=\psi'_y(p_{\varphi(v_1)}(v_1))$.  The colour $\psi'_y(p_i(v_2))$ is stored explicitly in the label of $(v_2,y_2)$.  This makes it possible to test if $\psi'_y(v_1)=\psi'_y(p_i(v_2))$.
         \end{compactitem}
 
-        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(x_y(v_1))$ from $\sigma_{y_1}(x_{y_1}(v_1))$ and $\mu'_{y_1}(v_1)$.  Next, recover $\sigma_y(P'_y(v))=\sigma_y(x_y(v_1))\mathbin{\circ}b_{y_1+1}(v)$. At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
+        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(x_y(v_1))$ from $\sigma_{y_1}(x_{y_1}(v_1))$ and $\mu_{y_1}(v_1)$.  Next, recover $\sigma_y(P'_y(v))=\sigma_y(x_y(v_1))\mathbin{\circ}b_{y_1+1}(v)$. At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.
 
         \item $y:=y_1=y_{2+1}$. This case is symmetric to the previous case with the roles and $1$ and $2$ reverse.
 
@@ -406,20 +407,33 @@ As in \cite{esperet.joret.ea:sparse}, we distinguish between two kinds of edges 
 \end{lemma}
 
 \begin{proof}
-    Let $\ell_i:=(x_i,y_i,z_i)$ for each $i\in\{1,2\}$.  If the edge $\ell_1\ell_2\in E(U_n)$, then there exists some $t$-tree $H$ some path $P$, some $n$-vertex subgraph $G$ of $H\boxtimes P$, and some edge $(v_1,y_1')(v_2,y_2')$ of $G$ such that $\ell_1=\ell_G(v_1,y_1')$ and $\ell_2=\ell_G(v_2,y_2')$.
+    Let $(x_1,y,z_1)(x_2,y,z_2)$ be a Type~1 edge of $U_n$ and, for each $i\in\{1,2\}$, let $\ell_i:=(x_i,y_i,z_i)$.  If the edge $\ell_1\ell_2\in E(U_n)$, then there exists some $t$-tree $H$ some path $P$, some $n$-vertex subgraph $G$ of $H\boxtimes P$, and some edge $(v_1,y_1')(v_2,y_2')$ of $G$ such that $\ell_1=\ell_G(v_1,y_1')$ and $\ell_2=\ell_G(v_2,y_2')$.
 
-    Since $y_1\neq y_2$, $y_1'\neq y_2'$.
-    The existence of the edge $(v_1,y_1')(v_2,y_2')$ therefore implies that $y_1'y_2'$ is an edge of $P$ so that (without loss of generality) $y_1'=y$ and $y_2'=y+1$ for some $y\in\{1,\ldots,h-1\}$.  Now, $y_1=\alpha_G(y)$ and $y_2=\alpha_G(y+1)$.  Specifically $y_2\in D(y_1)$ (see \cref{labels-i}) and $|D(y_1)|\in O(\log n)$.  Therefore, for a fixed $y_1$, the number of possible choices for $y_2$ is $O(\log n)$.
+    Since $\alpha(y_1')=y_1\neq y_2=\alpha(y_2')$, $y_1'\neq y_2'$. The existence of the edge $(v_1,y_1')(v_2,y_2')$ in $G$ therefore implies that $y_1'y_2'$ is an edge of $P$ so that (without loss of generality) $y_1'=y$ and $y_2'=y+1$ for some $y\in\{1,\ldots,h-1\}$.  Now, $y_1=\alpha(y)$ and $y_2=\alpha(y+1)$.  Specifically $y_2\in D(y_1)$ (see \cref{labels-i}) and $|D(y_1)|\in O(\log n)$.  Therefore, for a fixed $y_1$, the number of possible choices for $y_2$ is $O(\log n)$.
 
-    By a similar line of reasoning, we can conclude that $v_1=v_2$ or that $v_1v_2\in E(H)$.  If $v_1=v_2$, then $x_2=J(x_1,\mu_y(x_1))$ and we direct the edge from $\ell_1$ to $\ell_2$.  Since $\mu_y(x_1)$ is included as part of $z_1$, this implies that, for a fixed $(x_1,y_1,z_1)$ there is at most one choice of $x_2$.
+    The existence of the edge $(v_1,y_1')(v_2,y_2')$ in $G$ implies that $v_1=v_2$ or that $v_1v_2\in E(H)$.
+    \begin{enumerate}
+        \item If $v_1=v_2$, then $x_2=J(x_1,\mu_y(v_1))$.  Since $\mu_y(v_1)$ is included as part of $z_1$ the condition $v_1=v_2$ implies that fixing $(x_1,y_1,z_1)=\ell_G(v_1,v_y)$ fixes the value of $x_2$.  We have already established that, for a fixed $y_1$, the number of options for $y_2$ is $O(\log n)$.  Finally, $z_2$ is a bitstring of length at most $\lambda$, so the number of options for $z_2$ is at most $2^\lambda+1-1=n^{o(1)}$.  Therefore, for a fixed $(x_1,y_1,z_1)$ the number of options for $(x_2,y_2,z_1)$ is at most
+        \[  1\cdot O(\log n) \cdot n^{o(1)} = n^{o(1)} \]
+        By \cref{vertex-count}, the number of chocies for $(x_1,y_1,z_1)$ is at most $n^{1+o(1)}$.  Therefore, the number of Type~2 edges in $U_n$ contributed by edges $(v_1,y_1')(v_2,y_2')$ in $n$-vertex graphs $G\in\mathcal{G}_t$ where $v_1=v_2$ is at most $n^{1+o(1)}\cdot n^{o(1)} = n^{1+o(1)}$.
 
-    If $v_1\neq v_2$, then $v_1v_2\in E(H)$.  Recall the definition of $S^+_y$,  which implies that $v_1,v_2\in S^+_y\cap S^+_{y+1}$.  Since $v_1v_2\in E(H)$, one of $v_1$ or $v_2$ is an $H$-parent of the other. Since $(v_2,y+1)\in V(G)$, $v_2\in S^+_y$ so $x_y(v_2)$ is defined. By \psref{clique-path-ii}, one of $x_2':=\sigma_y(x_y(v_2))$ or $x_1=\sigma_y(x_y(v_1))$ is a prefix of the other.  Without loss of generality, suppose $x_2'$ is a prefix of $x_1$ and direct the edge $\ell_1\ell_2$ away from $\ell_1$.
+        \item If $v_1v_2\in E(H)$ then recall the definition of $S^+_y$,  which implies that $v_1,v_2\in S^+_y\cap S^+_{y+1}$.  Since $v_1v_2\in E(H)$, one of $v_1$ or $v_2$ is an $H$-parent of the other. Since $(v_2,y+1)\in V(G)$, $v_2\in S^+_y$ so $x_y(v_2)$ is defined. By \psref{clique-path-ii}, one of $x_2':=\sigma_y(x_y(v_2))$ or $x_1=\sigma_y(x_y(v_1))$ is a prefix of the other.  By \pref{tree-height}, $h(T_y)\le \log|S^+_y|\le\log n+\lambda -|x_1|-|y_1|$.
 
-    As in the previous proof, the number of choices for $x_2'$ is $O(\log n)=n^{o(1)}$.
-    Now, by \pref{transition-code} there exists a binary string $\mu'_y(v_2)$ of length $o(\log n)$ such that $J(x_2',\mu'_y(v_2))=\sigma_{y+1}(x_{y+1}(v))=x_2$.  For a fixed $x_2'$, the number of choices of $\mu'_y(v_2)$ is $2^{o(\log n)}=n^{o(1)}$ and, since $J$ is a function, the number of choices for $x_2$ is at most $n^{o(1)}$.  Therefore, for fixed $(x_1,y_1,z_1)$, the number of choices for $(x_2,y_2,z_2)$ that result in a Type~2 edge directed from $(x_1,y_1,z_1)$ to $(x_2,y_2,z_2)$ is at most $n^{o(1)}\cdot 2^\lambda=n^{o(1)}$.  Therefore, the total number of Type~2 edges is at most $|V(U_n)|\cdot n^{o(1)} = n^{1+o(1)}$.
+        Therefore, for a fixed $(x_1,y_1,z_1)$, the number of choices for $x_2'$ is at most $(|x_1|+1+2^{\log n + \lambda - |x_1| - |y_1|}=n^{1+o(1)}/2^{|x_1|+|y_1|}$.
+
+        Since $x_2'=x_y(v_2)$, by \pref{transition-code-v}, there exists a bitstring $\mu_y(v_2)$ of length $o(\log n)$ such that $J(x_2',\mu_y(v_2))=\sigma_{y+1}(v_2)=x_2$.  Therefore, for a fixed $x_2'$, the number of choices for $x_2$ is at most $2^{o(\log n)}=n^{o(1)}$.  Thus, for a fixed $(x_1,y_1,z_1)$, the number of choices for $(x_2,y_2,z_2)$ is at most
+        \[
+            n^{1+o(1)}/2^{|x_1|+|y_1|} \cdot O(\log n) \cdot n^{o(1)} = n^{1+o(1)}/2^{|x_1|} \enspace .
+        \]
+        where the first first factor counts the number of options for $x_2$, the second the number of options for $y_2$, and the third the number of options of $z_2$.  For fixed $r:=|x_1|+|x_2|$, the number of choices for $(x_1,y_1)$ is $(r+1)\cdot 2^{r}$.  Therefore, for a fixed $r$, the number of choices for $(x_1,y_1,z_1)$ is $(r+1)\cdot 2^r \cdot(2^{\lambda+1}-1)=2^r\cdot n^{o(1)}$.  We can now sum over $r$ to determine that the total number of Type~2 edges contributed by some edge $(v_1,y'_1)(v_2,y'_2)$ in some graph $G\in \mathcal{G}_t$ with $v_1\neq v_2$ is at most
+        \[
+            \sum_{r=0}^{\log n+\lambda} 2^r\cdot n^{1+o(1)}/2^r = n^{1+o(1)}(\log n+\lambda+1) = n^{1+o(1)}.
+        \]
+    \end{enumerate}
+    Each Type~2 edge $(x_1,y_1,z_1)(x_2,y_2,z_2)$ of $U_n$ is contributed by some edge $(v_1,y_1)(v_2,y_2)$ in some graph $G\in\mathcal{G}_t$ and either $v_1=v_2$ or $v_1\neq v_2$.  Therefore, the two cases analyzed above establish that $U_n$ has $n^{1+o(1)}$ Type~2 edges.
 \end{proof}
 
-\Cref{flat-edges,vertical-edges} immediately imply our main theorem:
+\Cref{vertex-count,flat-edges,vertical-edges} immediately imply our main theorem:
 
 \begin{theorem}\label{main}
     For each fixed integer $t\ge 1$ and each $n\in \N$ there exists a graph $U_n$ with $n^{1+o(1)}$ vertices and edges such that, for each $n$-vertex graph $G\in \mathcal{G}_t$, $U_n$ contains an induced subgraph isomorphic to $G$.
@@ -434,7 +448,8 @@ A more careful handling of $n^{o(1)}$ factors in our proofs gives an upper bound
 \[
     n\cdot 2^{O(\sqrt{\log n\log\log n})}\cdot (\log n)^{O(t^2)}
 \]
-on the number of edges and vertices in $U_n$.  The bottleneck in the analysis is the value $\lambda$ which represents the tradeoff between the lengths of the transition codes $\mu$ and the excess height of trees $T_1,\ldots,T_h$ (this tradeoff is captured by the parameter $k$ in \cite{dujmovic.esperet.ea:adjacency}).  In particular, the optimal tradeoff is obtained when $\mu'_y(v)\in O(\sqrt{\log n\log\log n})$ and $h(T_y)\le \log |S^+_y| + O(\sqrt{\log n\log\log n})$.
+on the number of edges and vertices in $U_n$.  The bottleneck in the analysis is the value $\lambda$ which represents the tradeoff between the lengths of the transition codes $\mu_y$ and the excess height of trees $T_1,\ldots,T_h$ (this tradeoff is captured by the parameter $k$ in \cite{dujmovic.esperet.ea:adjacency}).  In particular, the optimal tradeoff is obtained when $\mu'_y(v)\in O(\sqrt{\log n\log\log n})$ and $h(T_y)\le \log |S^+_y| + O(\sqrt{\log n\log\log n})$.  The $(\log n)^{O(t^2)}$ factor comes from storing the colours $\psi'_{y+b}(p_i(v))$ in each for each $i\in\{1,\ldots,t+1\}$, since each colour comes from a set of size $(\log n)^{O(t)}$.
+
 
 We remark that our proof includes within it a labelling scheme for graphs of treewidth at most $t$.  Analyzing this labelling scheme separately shows that it gives rise to a graph $H_n$ that has $n(\log n)^{O(t^2)}$ edges and contains each $n$-vertex subgraph of treewidth at most $t$ as an induced subgraph.
 
