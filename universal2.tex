@@ -146,7 +146,7 @@ For each vertex $(v,y)$ of $G\subseteq H\boxtimes P$, the label $\ell(v,y)$ has 
 
     \item $d_y(x_y(p_i(v)))$ for each $i\in\{1,\ldots,t+1\}$ (a bitstring of length $O(t\log\log n)$.
 
-    \item $\psi_{y+b}(p_i(v))$ for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ (a bitstring of length $O(t\log\log n + t\log t)$).\label{psi} \textcolor{red}{[L. was this part in the original labelling? Didn't we use $\phi$ to do this?]}
+    \item $\psi_{y+b}(p_i(v))$ for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ (a bitstring of length $O(t\log\log n + t\log t)$).\label{psi} \textcolor{red}{[L. was this part in the original labelling? Didn't we use $\varphi$ to do this instead? I think we should add some words about that here]}
 
     \item $a_y(v)$: A bitstring of length $3(t+1)$ that indicates, for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ whether or not $G$ contains the edge with endpoints $(v,y)$ and $(p_i(v),y+b)$.
 \end{compactenum}
@@ -365,7 +365,7 @@ Given inputs $\ell(v_1,y_1)$ and $\ell(v_2,y_2)$, the adjacency testing function
             \item  The colour $\psi'_y(v_1)$ can be recovered from $\ell(v_1,y_1)$ since $\psi'_y(v_1)=\psi'_y(p_{\varphi(v_1)}(v_1))$.  The colour $\psi'_y(p_i(v_2))$ is stored explicitly in $\ell(v_2,y_2)$.  This makes it possible to test if $\psi'_y(v_1)=\psi'_y(p_i(v_2))$.
         \end{compactitem}
 
-        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(x_y(v_1))$ from $\sigma_{y_1}(x_{y_1}(v_1))$ and $\mu_{y_1}(v_1)$.  Next, recover $\sigma_y(P'_y(v))=\sigma_y(x_y(v_1))\mathbin{\circ}b_{y_1+1}(v)$. At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.  \textcolor{red}{[I think we can elaborate a little here, explaining that (L6) contains the information to compare the $\psi_{y+1}'$ of the 2 vertices]}
+        \item $y:=y_2=y_1+1$.  In this case, recover $\sigma_y(x_y(v_1))$ from $\sigma_{y_1}(x_{y_1}(v_1))$ and $\mu_{y_1}(v_1)$.  Next, recover $\sigma_y(P'_y(v))=\sigma_y(x_y(v_1))\mathbin{\circ}b_{y_1+1}(v)$. At this point, the algorithm proceeds exactly as in the previous case except that, in the final step one bit of $a_{y_2}(v_2)$ is used to check if $(v_1,y_1)=(p_i(v_2),y_2-1)$ is present in $G$.  \textcolor{red}{[I think we can elaborate a little here, explaining that (NL6) contains the information to compare the $\psi_{y+1}'$ of the 2 vertices]}
 
         \item $y:=y_1=y_{2+1}$. This case is symmetric to the previous case with the roles and $1$ and $2$ reverse.
 
