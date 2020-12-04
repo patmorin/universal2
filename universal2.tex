@@ -85,7 +85,7 @@ Without loss of generality, we may assume that $H$ has at least $t+1$ vertices. 
 
 Each vertex $w\in C_v$ is called an \emph{$H$-parent} of $v$.  Fix a proper colouring $\varphi:V(H)\to\{1,\ldots,t+1\}$.  For any vertex $v$ of $H$, the \emph{$i$-parent} of $v$, denoted by $p_i(v)$,  is the unique node $w\in C_v$ with $\varphi(w)=i$.  Note that $v$ is an $H$-parent of itself and, specifically, $v$ is the $\varphi(v)$-parent of itself, i.e, $p_{\varphi(v)}(v)=v$.
 
-The scheme makes extensive use of binary search trees.\todo{Define BST}  For any node $x$ in a binary search tree $T$, $\sigma_T(x)$ is the binary string $b_1,\ldots,b_k$ obtained from the root-to-$x$ path $x_0,\ldots,x_k$ in $T$ by setting $b_i=0$ or $b_i=1$ depending on whether $x_i$ is the left or right child of $x_{i-1}$, respectively. Note that the function $\sigma_T:V(T)\to\{0,1\}^*$ is injective.  We extend this notation to paths in $T$ so that, if $P$ is a path from the root of $T$ to some node $x$, then $\sigma_T(P):=\sigma_T(x)$.
+The scheme makes extensive use of binary search trees.\todo{Define BST and height $h(T)$}  For any node $x$ in a binary search tree $T$, $\sigma_T(x)$ is the binary string $b_1,\ldots,b_k$ obtained from the root-to-$x$ path $x_0,\ldots,x_k$ in $T$ by setting $b_i=0$ or $b_i=1$ depending on whether $x_i$ is the left or right child of $x_{i-1}$, respectively. Note that the function $\sigma_T:V(T)\to\{0,1\}^*$ is injective.  We extend this notation to paths in $T$ so that, if $P$ is a path from the root of $T$ to some node $x$, then $\sigma_T(P):=\sigma_T(x)$.
 
 The scheme also makes use of an interval supergraph of $H$.  Each vertex $v$ of $H$ is mapped to a real interval $[a_v,b_v]$ in such a way that $vw\in E(H)$ implies that $[a_v,b_v]\cap [a_w,b_w]\neq\emptyset$.  This mapping is also thin, in the following sense:
 
@@ -117,9 +117,9 @@ Let $\psi_y:S^+_y\to\{1,\ldots,O(t\log n)\}$ be a colouring of $S^+_y$ such that
 
 The binary search tree sequence $T_1,\ldots,T_h$ is very special because it has two important properties:
 \begin{compactenum}[(P1)]\setcounter{enumi}{4}
-    \item For each $y\in\{1,\ldots,h\}$, $h(T_y)\le \log|S^+_y|+o(\log n)$. \textcolor{red}{[L. we need to define the height $h(T)$ at some point, and maybe also change the name? it is a bit disturbing to have for any (...) $h$, $h(T)...$ for two different meanings of $h$]} \label{tree-height}
+    \item For each $y\in\{1,\ldots,h\}$, the height of $T_y$ is  $h(T_y)\le \log|S^+_y|+o(\log n)$. \textcolor{red}{[L. we need to define the height $h(T)$ at some point, and maybe also change the name? it is a bit disturbing to have for any (...) $h$, $h(T)...$ for two different meanings of $h$]} \label{tree-height}
     % \item There exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for each $y\in\{1,\ldots,h-1\}$ and each $x\in V(T_y)\cap V(T_{y+1})$ there exists a bitstring $\mu_y(x)$ of length $o(\log n)$ such that $J(\sigma_{y}(x),\mu_y(x))=\sigma_{T_{y+1}}(x)$. \label{transition-code-x}
-    \item There exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for each $y\in\{1,\ldots,h-1\}$ and each $v\in S^+_y\cap S^+_{y+1}$, there exists a bitstring $\mu_y(v)$ of length $o(\log n)$ such that $J(\sigma_{y}(x_y(v)),\mu_y(v))=\sigma_{y+1}(x_{y+1}(v))$. \textcolor{red}{[L. I think we need to say more here, in the original paper $J$ takes $\sigma(P_y(v))$ as input, not just $\sigma(x_y(v))$]}\label{transition-code-v}
+    \item There exists a universal function $J:\{0,1\}^*\times\{0,1\}^*\to\{0,1\}^*$ such that for each $y\in\{1,\ldots,h-1\}$ and each $v\in S^+_y\cap S^+_{y+1}$, there exists a bitstring $\mu_y(v)$ of length $o(\log n)$ such that $J(\sigma_{y}(x_y(v)),\mu_y(v))=\sigma_{y+1}(x_{y+1}(v))$. \textcolor{red}{[L. I think we need to say more here, in the original paper $J$ takes $\sigma(P_y(v))$ as input, not just $\sigma(x_y(v))$][P. Yes, and produces $\sigma(P_{y+1}(v))$ as output.  At some point I remember justifying this by the fact that there existed transition codes for $\sigma_y(x_y(w))$ for each $w\in C_v$ and $\sigma(P_{y+1}(v))=\sigma(x_{y+1}(w))$ for some $w\in C_v$.  The most recent version of the labelling paper doesn't really describe it this way, though.]}\label{transition-code-v}
 \end{compactenum}
 The bitstring $\mu_y(v)$ is called a \emph{transition code}.  The existence of the tree sequence $T_1,\ldots,T_h$ and corresponding transition codes is non-trivial and is the primary technical tool used to establish the results in \cite{dujmovic.esperet.ea:adjacency,esperet.joret.ea:sparse}.
 
@@ -146,7 +146,7 @@ For each vertex $(v,y)$ of $G\subseteq H\boxtimes P$, the label $\ell(v,y)$ has 
 
     \item $d_y(x_y(p_i(v)))$ for each $i\in\{1,\ldots,t+1\}$ (a bitstring of length $O(t\log\log n)$.
 
-    \item $\psi_{y+b}(p_i(v))$ for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ (a bitstring of length $O(t\log\log n + t\log t)$).\label{psi} \textcolor{red}{[L. was this part in the original labelling? Didn't we use $\varphi$ to do this instead? I think we should add some words about that here]}
+    \item $\psi_{y+b}(p_i(v))$ for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ (a bitstring of length $O(t\log\log n + t\log t)$).\label{psi} \textcolor{red}{[L. was this part in the original labelling? Didn't we use $\phi$ to do this?][P: In the original labelling $\varphi$ is what we now call $\psi$.  The original labelling didn't use the proper $(t+1)$-colouring, instead it stored $d_y(x_y(v))$ explicitly and separately from $\{d_y(x_y(w)):w\in C_v$. ]}
 
     \item $a_y(v)$: A bitstring of length $3(t+1)$ that indicates, for each $i\in\{1,\ldots,t+1\}$ and each $b\in\{-1,0,1\}$ whether or not $G$ contains the edge with endpoints $(v,y)$ and $(p_i(v),y+b)$.
 \end{compactenum}
@@ -271,8 +271,8 @@ We now describe how to modify the adjacency labelling scheme of \citet{dujmovic.
                 \ENDIF
             \ENDFOR
         \ENDFOR
-        \STATE{\textsc{Fixup}(left child of $u$) (if any)} \textcolor{red}{$u$ should be $x$?}
-        \STATE{\textsc{Fixup}(right child of $u$) (if any)} \textcolor{red}{$u$ should be $x$?}
+        \STATE{\textsc{Fixup}(left child of $x$) (if any)}
+        \STATE{\textsc{Fixup}(right child of $x$) (if any)}
     \end{algorithmic}
 \end{minipage}
 
